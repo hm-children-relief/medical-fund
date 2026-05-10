@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Madison Children’s Relief Fund</title>
     <style>
-        /* ALL YOUR ORIGINAL STYLES */
         :root { --primary: #2c3e50; --accent: #e91e63; --light: #f9f9f9; }
         body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; color: #333; background: var(--light); line-height: 1.7; }
         header { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
@@ -137,7 +136,7 @@
     </section>
 
     <script>
-        const CLOUDINARY_NAME = 'dyzv0doj6'; // YOUR ACTUAL CLOUD NAME
+        const CLOUDINARY_NAME = 'dyzv0doj6'; 
 
         async function uploadToCloudinary(event) {
             const file = event.target.files[0];
@@ -188,7 +187,7 @@
             });
 
             if (response.ok) {
-                alert("Thank you! Your donation details have been submitted successfully.");
+                alert("We appreciate your support. Thank you!");
                 location.reload();
             } else {
                 alert("There was an error. Please try again.");
