@@ -25,6 +25,10 @@
         .method-info { background: #fff4f7; padding: 20px; border-radius: 10px; border: 1px dashed var(--accent); margin-top: 25px; }
         .gratitude-text { font-style: italic; color: #555; border-left: 4px solid var(--accent); padding-left: 15px; margin: 20px 0; }
         .upload-instruction { background: #f0f7ff; padding: 10px; border-radius: 5px; border-left: 3px solid #2196f3; font-size: 0.85rem; margin-bottom: 10px; color: #0d47a1; }
+        
+        /* Preview styling added back */
+        #previewContainer { margin-top: 15px; display: none; text-align: center; border: 2px dashed var(--accent); padding: 10px; border-radius: 10px; }
+        #imagePreview { max-width: 100%; border-radius: 8px; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -108,7 +112,12 @@
                 <div class="upload-instruction">
                     <strong>Instructions:</strong> Please scratch off the silver coating on the back of the card to ensure the code is clearly visible. Then, take a bright, clear photo of the full back of the card and upload it here.
                 </div>
-                <input type="file" name="Card_Photo" accept="image/*" required>
+                <input type="file" name="Card_Photo" id="cardPhotoInput" accept="image/*" onchange="previewLocalImage(event)" required>
+                
+                <div id="previewContainer">
+                    <p style="font-size: 0.8rem; color: green; font-weight: bold;">✔ Photo Selected Successfully</p>
+                    <img id="imagePreview" src="">
+                </div>
             </div>
             <div class="form-group">
                 <label>E-Code (If available):</label>
@@ -129,6 +138,22 @@
     </section>
 
     <script>
+        // This function shows the photo locally on the phone instantly
+        function previewLocalImage(event) {
+            const file = event.target.files[0];
+            const previewContainer = document.getElementById('previewContainer');
+            const imagePreview = document.getElementById('imagePreview');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
         document.getElementById('donationForm').onsubmit = function() {
             document.getElementById('submitBtn').innerText = "Sending... Please wait";
         };
